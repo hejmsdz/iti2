@@ -5,8 +5,8 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - "shared:/opt/pm/processmaker/shared"
-      - "config:/opt/pm/processmaker/workflow/engine/config"
+      - "./docker/volumes/shared:/opt/pm/processmaker/shared"
+      - "./docker/volumes/config:/opt/pm/processmaker/workflow/engine/config"
   mysql:
     image: "mysql:5"
     environment:
@@ -14,9 +14,5 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - "mysql:/var/lib/mysql"
-volumes:
-  shared:
-  config:
-  mysql:
+      - "./docker/volumes/mysql:/var/lib/mysql"
 
