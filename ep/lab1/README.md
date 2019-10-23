@@ -22,7 +22,7 @@ open http://localhost:8080
 # ^ otwórz w ulubionej przeglądarce, gdy Docker wstanie
 ```
 
-.## Logowanie do systemu
+## Logowanie do systemu
 
 * Workspace: `ep`
 * Konto administratora: `admin`:`admin`
