@@ -1,0 +1,18 @@
+version: '3'
+services:
+  processmaker:
+    image: "eltercera/docker-processmaker"
+    ports:
+      - "8080:80"
+    volumes:
+      - "./docker/volumes/lab1_shared/_data:/opt/pm/processmaker/shared"
+      - "./docker/volumes/lab1_config/_data:/opt/pm/processmaker/workflow/engine/config"
+  mysql:
+    image: "mysql:5"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./docker/volumes/lab1_mysql/_data:/var/lib/mysql"
+
