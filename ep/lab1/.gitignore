@@ -1,6 +1,1 @@
-mysql
-config
-shared
-!mysql/.gitkeep
-!config/.gitkeep
-!shared/.gitkeep
+docker
