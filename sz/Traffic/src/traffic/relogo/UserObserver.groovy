@@ -16,24 +16,22 @@ class UserObserver extends ReLogoObserver{
 		clearAll()
 		setDefaultShape(UserTurtle, "car")
 		
-		createPoissonStreams(1) {
-			setxy(-10, 0)
-			facexy(0, 0)
+		def w = (UserPatch.laneWidth + 1) / 2
+		def d = 15
+		for (pos in [[-1, 0], [1, 0], [0, -1], [0, 1]]) {
+			def (x, y) = pos
+			def sign = (x + y) * w
+			createPoissonStreams(1) {
+				def xOffset = -sign * (1 - Math.abs(x))
+				def yOffset = sign * (1 - Math.abs(y))
+				setxy(d * x + xOffset, d * y + yOffset)
+				facexy(xOffset, yOffset)
+				setColor(sky() + 2)
+			}
 		}
 		
-		createPoissonStreams(1) {
-			setxy(10, 0)
-			facexy(0, 0)
-		}
-		
-		createPoissonStreams(1) {
-			setxy(0, -10)
-			facexy(0, 0)
-		}
-		
-		createPoissonStreams(1) {
-			setxy(0, 10)
-			facexy(0, 0)
+		ask(patches()) {
+			setColor()
 		}
 
 		resetTimer()
@@ -43,9 +41,6 @@ class UserObserver extends ReLogoObserver{
 	def go(){
 		def dt = timer()
 		ask(turtles()){
-			step(dt)
-		}
-		ask(poissonStreams()){
 			step(dt)
 		}
 		resetTimer()

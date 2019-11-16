@@ -412,6 +412,27 @@ public class ReLogoTurtle extends BaseTurtle{
 	}
 
 	/**
+	 * Returns the value from the getLaneWidth() method of the underlying patch.
+	 * 
+	 * @return getLaneWidth() of type java.lang.Object
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.UserPatch")
+	public java.lang.Object getLaneWidth(){
+		traffic.relogo.UserPatch p = (traffic.relogo.UserPatch)patchHere();
+		return p.getLaneWidth();
+	}
+
+	/**
+	 * Calls the setLaneWidth(java.lang.Object) method of the underlying patch.
+	 * 
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.UserPatch")
+	public void setLaneWidth(java.lang.Object value){
+		traffic.relogo.UserPatch p = (traffic.relogo.UserPatch)patchHere();
+		p.setLaneWidth(value);
+	}
+
+	/**
 	 * Makes a directed userLink from a turtle to the caller then executes a set of
 	 * commands on the created userLink.
 	 * 

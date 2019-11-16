@@ -31,5 +31,17 @@ class UserTurtle extends ReLogoTurtle{
 		}
 		
 		forward(speed * dt)
+		
+		def collisions = userTurtlesHere()
+		if (collisions.size() > 1) {
+			ask(collisions) {
+				die()
+			}
+			return
+		}
+		
+		if (patchHere().getPcolor() == green()) {
+			die()
+		}
 	}
 }
