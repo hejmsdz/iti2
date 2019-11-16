@@ -11,5 +11,4 @@ import repast.simphony.relogo.schedule.Setup;
 import traffic.ReLogoPatch;
 
 class UserPatch extends ReLogoPatch{
-
 }

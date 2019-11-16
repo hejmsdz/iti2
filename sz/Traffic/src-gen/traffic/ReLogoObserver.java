@@ -15,6 +15,193 @@ import repast.simphony.relogo.builder.ReLogoBuilderGeneratedFor;
 public class ReLogoObserver extends BaseObserver{
 
 	/**
+	 * Makes a number of randomly oriented poissonStreams and then executes a set of commands on the
+	 * created poissonStreams.
+	 * 
+	 * @param number
+	 *            a number
+	 * @param closure
+	 *            a set of commands
+	 * @return created poissonStreams
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.PoissonStream")
+	public AgentSet<traffic.relogo.PoissonStream> createPoissonStreams(int number, Closure closure) {
+		AgentSet<traffic.relogo.PoissonStream> result = new AgentSet<>();
+		AgentSet<Turtle> createResult = this.crt(number,closure,"PoissonStream");
+		for (Turtle t : createResult){
+			if (t instanceof traffic.relogo.PoissonStream){
+				result.add((traffic.relogo.PoissonStream)t);
+			}
+		} 
+		return result; 
+	}
+
+	/**
+	 * Makes a number of randomly oriented poissonStreams and then executes a set of commands on the
+	 * created poissonStreams.
+	 * 
+	 * @param number
+	 *            a number
+	 * @param closure
+	 *            a set of commands
+	 * @return created poissonStreams
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.PoissonStream")
+	public AgentSet<traffic.relogo.PoissonStream> createPoissonStreams(int number) {
+		return createPoissonStreams(number,null);
+	}
+
+	/**
+	 * Makes a number of uniformly fanned poissonStreams and then executes a set of commands on the
+	 * created poissonStreams.
+	 * 
+	 * @param number
+	 *            a number
+	 * @param closure
+	 *            a set of commands
+	 * @return created poissonStreams
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.PoissonStream")
+	public AgentSet<traffic.relogo.PoissonStream> createOrderedPoissonStreams(int number, Closure closure) {
+		AgentSet<traffic.relogo.PoissonStream> result = new AgentSet<>();
+		AgentSet<Turtle> createResult = this.cro(number,closure,"PoissonStream");
+		for (Turtle t : createResult){
+			if (t instanceof traffic.relogo.PoissonStream){
+				result.add((traffic.relogo.PoissonStream)t);
+			}
+		} 
+		return result; 
+	}
+
+	/**
+	 * Makes a number of uniformly fanned poissonStreams and then executes a set of commands on the
+	 * created poissonStreams.
+	 * 
+	 * @param number
+	 *            a number
+	 * @param closure
+	 *            a set of commands
+	 * @return created poissonStreams
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.PoissonStream")
+	public AgentSet<traffic.relogo.PoissonStream> createOrderedPoissonStreams(int number) {
+		return createOrderedPoissonStreams(number,null);
+	}
+
+	/**
+	 * Queries if object is a poissonStream.
+	 * 
+	 * @param o
+	 *            an object
+	 * @return true or false based on whether the object is a poissonStream
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.PoissonStream")
+	public boolean isPoissonStreamQ(Object o){
+		return (o instanceof traffic.relogo.PoissonStream);
+	}
+
+	/**
+	 * Returns an agentset containing all poissonStreams.
+	 * 
+	 * @return agentset of all poissonStreams
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.PoissonStream")
+	public AgentSet<traffic.relogo.PoissonStream> poissonStreams(){
+		AgentSet<traffic.relogo.PoissonStream> a = new AgentSet<traffic.relogo.PoissonStream>();
+		for (Object e : this.getContext().getObjects(traffic.relogo.PoissonStream.class)) {
+			if (e instanceof traffic.relogo.PoissonStream){
+				a.add((traffic.relogo.PoissonStream)e);
+			}
+		}
+		return a;
+	}
+
+	/**
+	 * Returns the poissonStream with the given who number.
+	 * 
+	 * @param number
+	 *            a number
+	 * @return turtle number
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.PoissonStream")
+	public traffic.relogo.PoissonStream poissonStream(Number number){
+		Turtle turtle = Utility.turtleU(number.intValue(), this);
+		if (turtle instanceof traffic.relogo.PoissonStream)
+			return (traffic.relogo.PoissonStream) turtle;
+		return null;
+	}
+
+	/**
+	 * Returns an agentset of poissonStreams on a given patch.
+	 * 
+	 * @param p
+	 *            a patch
+	 * @return agentset of poissonStreams on patch p
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.PoissonStream")
+	public AgentSet<traffic.relogo.PoissonStream> poissonStreamsOn(Patch p){
+		AgentSet<traffic.relogo.PoissonStream> result = new AgentSet<traffic.relogo.PoissonStream>();						
+		for (Turtle t : Utility.getTurtlesOnGridPoint(p.getGridLocation(),this,"poissonStream")){
+			if (t instanceof traffic.relogo.PoissonStream)
+			result.add((traffic.relogo.PoissonStream)t);
+		}
+		return result;
+	}
+
+	/**
+	 * Returns an agentset of poissonStreams on the same patch as a turtle.
+	 * 
+	 * @param t
+	 *            a turtle
+	 * @return agentset of poissonStreams on the same patch as turtle t
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.PoissonStream")
+	public AgentSet<traffic.relogo.PoissonStream> poissonStreamsOn(Turtle t){
+		AgentSet<traffic.relogo.PoissonStream> result = new AgentSet<traffic.relogo.PoissonStream>();						
+		for (Turtle tt : Utility.getTurtlesOnGridPoint(Utility.ndPointToGridPoint(t.getTurtleLocation()),this,"poissonStream")){
+			if (tt instanceof traffic.relogo.PoissonStream)
+			result.add((traffic.relogo.PoissonStream)tt);
+		}
+		return result;
+	}
+
+	/**
+	 * Returns an agentset of poissonStreams on the patches in a collection or on the patches
+	 * that a collection of turtles are.
+	 * 
+	 * @param a
+	 *            a collection
+	 * @return agentset of poissonStreams on the patches in collection a or on the patches
+	 *         that collection a turtles are
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.PoissonStream")
+	public AgentSet<traffic.relogo.PoissonStream> poissonStreamsOn(Collection c){
+
+		if (c == null || c.isEmpty()){
+			return new AgentSet<traffic.relogo.PoissonStream>();
+		}
+
+		Set<traffic.relogo.PoissonStream> total = new HashSet<traffic.relogo.PoissonStream>();
+		if (c.iterator().next() instanceof Turtle){
+			for (Object o : c){
+				if (o instanceof Turtle){
+					Turtle t = (Turtle) o;
+					total.addAll(poissonStreamsOn(t));
+				}
+			}
+		}
+		else {
+			for (Object o : c){
+				if (o instanceof Patch){
+					Patch p = (Patch) o;
+					total.addAll(poissonStreamsOn(p));
+				}
+			}
+		}
+		return new AgentSet<traffic.relogo.PoissonStream>(total);
+	}
+
+	/**
 	 * Makes a number of randomly oriented userTurtles and then executes a set of commands on the
 	 * created userTurtles.
 	 * 
