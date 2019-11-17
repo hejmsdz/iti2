@@ -14,8 +14,6 @@ class UserTurtle extends ReLogoTurtle{
 	enum State { ACCELERATING, BRAKING, DRIVING }
 	
 	def speed = 0
-	def maxSpeed = 10
-	def acceleration = 10
 	def state = State.ACCELERATING
 	
 	def step(double dt) {
