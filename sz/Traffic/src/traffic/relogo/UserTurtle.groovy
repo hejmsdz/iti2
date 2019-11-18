@@ -31,6 +31,12 @@ class UserTurtle extends ReLogoTurtle{
 			state = State.DRIVING
 		}
 		
+		def threshold = 0.8
+		
+		if ((Math.abs(getXcor() - destination.getXcor()) < threshold) ^ (Math.abs(getYcor() - destination.getYcor()) < threshold)) {
+			face(destination)
+		}
+		
 		forward(speed * dt)
 		
 		def collisions = userTurtlesHere()
