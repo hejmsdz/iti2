@@ -17,6 +17,7 @@ class UserTurtle extends ReLogoTurtle{
 	def maxSpeed = 10
 	def acceleration = 10
 	def state = State.ACCELERATING
+	Destination destination = null
 	
 	def step(double dt) {
 		if (speed < maxSpeed && state == State.ACCELERATING) {
@@ -43,5 +44,10 @@ class UserTurtle extends ReLogoTurtle{
 		if (patchHere().getPcolor() == green()) {
 			die()
 		}
+	}
+	
+	def setDestination(Destination value) {
+		destination = value 
+		setColor(destination.getColor())
 	}
 }

@@ -15,6 +15,193 @@ import repast.simphony.relogo.builder.ReLogoBuilderGeneratedFor;
 public class ReLogoObserver extends BaseObserver{
 
 	/**
+	 * Makes a number of randomly oriented destinations and then executes a set of commands on the
+	 * created destinations.
+	 * 
+	 * @param number
+	 *            a number
+	 * @param closure
+	 *            a set of commands
+	 * @return created destinations
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Destination")
+	public AgentSet<traffic.relogo.Destination> createDestinations(int number, Closure closure) {
+		AgentSet<traffic.relogo.Destination> result = new AgentSet<>();
+		AgentSet<Turtle> createResult = this.crt(number,closure,"Destination");
+		for (Turtle t : createResult){
+			if (t instanceof traffic.relogo.Destination){
+				result.add((traffic.relogo.Destination)t);
+			}
+		} 
+		return result; 
+	}
+
+	/**
+	 * Makes a number of randomly oriented destinations and then executes a set of commands on the
+	 * created destinations.
+	 * 
+	 * @param number
+	 *            a number
+	 * @param closure
+	 *            a set of commands
+	 * @return created destinations
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Destination")
+	public AgentSet<traffic.relogo.Destination> createDestinations(int number) {
+		return createDestinations(number,null);
+	}
+
+	/**
+	 * Makes a number of uniformly fanned destinations and then executes a set of commands on the
+	 * created destinations.
+	 * 
+	 * @param number
+	 *            a number
+	 * @param closure
+	 *            a set of commands
+	 * @return created destinations
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Destination")
+	public AgentSet<traffic.relogo.Destination> createOrderedDestinations(int number, Closure closure) {
+		AgentSet<traffic.relogo.Destination> result = new AgentSet<>();
+		AgentSet<Turtle> createResult = this.cro(number,closure,"Destination");
+		for (Turtle t : createResult){
+			if (t instanceof traffic.relogo.Destination){
+				result.add((traffic.relogo.Destination)t);
+			}
+		} 
+		return result; 
+	}
+
+	/**
+	 * Makes a number of uniformly fanned destinations and then executes a set of commands on the
+	 * created destinations.
+	 * 
+	 * @param number
+	 *            a number
+	 * @param closure
+	 *            a set of commands
+	 * @return created destinations
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Destination")
+	public AgentSet<traffic.relogo.Destination> createOrderedDestinations(int number) {
+		return createOrderedDestinations(number,null);
+	}
+
+	/**
+	 * Queries if object is a destination.
+	 * 
+	 * @param o
+	 *            an object
+	 * @return true or false based on whether the object is a destination
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Destination")
+	public boolean isDestinationQ(Object o){
+		return (o instanceof traffic.relogo.Destination);
+	}
+
+	/**
+	 * Returns an agentset containing all destinations.
+	 * 
+	 * @return agentset of all destinations
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Destination")
+	public AgentSet<traffic.relogo.Destination> destinations(){
+		AgentSet<traffic.relogo.Destination> a = new AgentSet<traffic.relogo.Destination>();
+		for (Object e : this.getContext().getObjects(traffic.relogo.Destination.class)) {
+			if (e instanceof traffic.relogo.Destination){
+				a.add((traffic.relogo.Destination)e);
+			}
+		}
+		return a;
+	}
+
+	/**
+	 * Returns the destination with the given who number.
+	 * 
+	 * @param number
+	 *            a number
+	 * @return turtle number
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Destination")
+	public traffic.relogo.Destination destination(Number number){
+		Turtle turtle = Utility.turtleU(number.intValue(), this);
+		if (turtle instanceof traffic.relogo.Destination)
+			return (traffic.relogo.Destination) turtle;
+		return null;
+	}
+
+	/**
+	 * Returns an agentset of destinations on a given patch.
+	 * 
+	 * @param p
+	 *            a patch
+	 * @return agentset of destinations on patch p
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Destination")
+	public AgentSet<traffic.relogo.Destination> destinationsOn(Patch p){
+		AgentSet<traffic.relogo.Destination> result = new AgentSet<traffic.relogo.Destination>();						
+		for (Turtle t : Utility.getTurtlesOnGridPoint(p.getGridLocation(),this,"destination")){
+			if (t instanceof traffic.relogo.Destination)
+			result.add((traffic.relogo.Destination)t);
+		}
+		return result;
+	}
+
+	/**
+	 * Returns an agentset of destinations on the same patch as a turtle.
+	 * 
+	 * @param t
+	 *            a turtle
+	 * @return agentset of destinations on the same patch as turtle t
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Destination")
+	public AgentSet<traffic.relogo.Destination> destinationsOn(Turtle t){
+		AgentSet<traffic.relogo.Destination> result = new AgentSet<traffic.relogo.Destination>();						
+		for (Turtle tt : Utility.getTurtlesOnGridPoint(Utility.ndPointToGridPoint(t.getTurtleLocation()),this,"destination")){
+			if (tt instanceof traffic.relogo.Destination)
+			result.add((traffic.relogo.Destination)tt);
+		}
+		return result;
+	}
+
+	/**
+	 * Returns an agentset of destinations on the patches in a collection or on the patches
+	 * that a collection of turtles are.
+	 * 
+	 * @param a
+	 *            a collection
+	 * @return agentset of destinations on the patches in collection a or on the patches
+	 *         that collection a turtles are
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Destination")
+	public AgentSet<traffic.relogo.Destination> destinationsOn(Collection c){
+
+		if (c == null || c.isEmpty()){
+			return new AgentSet<traffic.relogo.Destination>();
+		}
+
+		Set<traffic.relogo.Destination> total = new HashSet<traffic.relogo.Destination>();
+		if (c.iterator().next() instanceof Turtle){
+			for (Object o : c){
+				if (o instanceof Turtle){
+					Turtle t = (Turtle) o;
+					total.addAll(destinationsOn(t));
+				}
+			}
+		}
+		else {
+			for (Object o : c){
+				if (o instanceof Patch){
+					Patch p = (Patch) o;
+					total.addAll(destinationsOn(p));
+				}
+			}
+		}
+		return new AgentSet<traffic.relogo.Destination>(total);
+	}
+
+	/**
 	 * Makes a number of randomly oriented poissonStreams and then executes a set of commands on the
 	 * created poissonStreams.
 	 * 
