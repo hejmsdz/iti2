@@ -15,18 +15,30 @@ class UserObserver extends ReLogoObserver{
 	def setup(){
 		clearAll()
 		setDefaultShape(UserTurtle, "car")
+		setDefaultShape(Destination, "house")
 		
 		def width = (UserPatch.laneWidth + 1) / 2
 		def d = 15
-		for (pos in [[-1, 0], [1, 0], [0, -1], [0, 1]]) {
-			def (x, y) = pos
+
+		[[-1, 0, red()], [1, 0, green()], [0, -1, blue()], [0, 1, yellow()]].eachWithIndex { pos, index ->
+
+			def (x, y, color) = pos
 			def sign = (x + y) * width
+			def xOffset = -sign * (1 - Math.abs(x))
+			def yOffset = sign * (1 - Math.abs(y))
+
 			createPoissonStreams(1) {
-				def xOffset = -sign * (1 - Math.abs(x))
-				def yOffset = sign * (1 - Math.abs(y))
 				setxy(d * x + xOffset, d * y + yOffset)
 				facexy(xOffset, yOffset)
-				setColor(sky() + 2)
+				destinations = [0,1,2,3] - index
+				setColor(white())
+			}
+			
+			createDestinations(1) {
+				setxy(d * x - xOffset, d * y - yOffset)
+				facexy(xOffset, yOffset)
+				setColor(color)
+				register()
 			}
 		}
 		

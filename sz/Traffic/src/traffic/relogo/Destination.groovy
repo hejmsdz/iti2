@@ -11,19 +11,19 @@ import repast.simphony.relogo.schedule.Go
 import repast.simphony.relogo.schedule.Setup
 import traffic.ReLogoTurtle
 
-class PoissonStream extends ReLogoTurtle {
-	def timeToHatch = 0
-	def destinations = []
+class Destination extends ReLogoTurtle {
+	static instances = []
 	
 	def step(double dt) {
-		if (timeToHatch > 0) {
-			timeToHatch -= dt
-		} else {
-			def randomDestination = Destination.instances[destinations[random(destinations.size)]]
-			hatchUserTurtles(1) {
-				destination = randomDestination
+		ask(userTurtlesHere()) { car ->
+			if (car.destination == this) {
+				println("Car reached destination!")
+				car.die()
 			}
-			timeToHatch = randomExponential(poissonStreamRate)
 		}
+	}
+	
+	def register() {
+		instances.add(this)
 	}
 }
