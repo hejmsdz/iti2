@@ -18,7 +18,7 @@ class Destination extends ReLogoTurtle {
 		ask(userTurtlesHere()) { car ->
 			if (car.destination == this) {
 				println("Car reached destination!")
-				car.die()
+				car.destroy()
 			}
 		}
 	}

@@ -16,7 +16,7 @@ class UserTurtle extends ReLogoTurtle{
 	def speed = 0
 	def state = State.ACCELERATING
 	Destination destination = null
-	def crashed = false
+	def shouldDestroy = false
 
 	def step(double dt) {
 		if (speed < maxSpeed && state == State.ACCELERATING) {
@@ -36,7 +36,7 @@ class UserTurtle extends ReLogoTurtle{
 			face(destination)
 		}
 
-		if (crashed) {
+		if (shouldDestroy) {
 			die()
 			return
 		}
@@ -46,7 +46,7 @@ class UserTurtle extends ReLogoTurtle{
 		def collisions = userTurtlesHere()
 		if (collisions.size() > 1) {
 			ask(collisions) {
-				crash()
+				destroy()
 			}
 			return
 		}
@@ -61,7 +61,7 @@ class UserTurtle extends ReLogoTurtle{
 		setColor(destination.getColor())
 	}
 
-	def crash() {
-		crashed = true
+	def destroy() {
+		shouldDestroy = true
 	}
 }
