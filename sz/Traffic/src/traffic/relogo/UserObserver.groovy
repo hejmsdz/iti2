@@ -72,7 +72,7 @@ class UserObserver extends ReLogoObserver{
 		UserTurtle.numAllCars
 	}
 	
-	def meanTimeToDestination() {
+	def meanTravelTime() {
 		def sum = 0
 		def count = 0
 		ask(destinations()) {
@@ -81,5 +81,21 @@ class UserObserver extends ReLogoObserver{
 		}
 		if (count == 0) return 0
 		sum / count
+	}
+	
+	def meanTravelTimeN() {
+		Destination.instances[3].meanTravelTime()
+	}
+	
+	def meanTravelTimeS() {
+		Destination.instances[2].meanTravelTime()
+	}
+	
+	def meanTravelTimeW() {
+		Destination.instances[0].meanTravelTime()
+	}
+	
+	def meanTravelTimeE() {
+		Destination.instances[1].meanTravelTime()
 	}
 }

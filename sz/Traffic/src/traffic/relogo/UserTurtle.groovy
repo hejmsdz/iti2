@@ -59,7 +59,7 @@ class UserTurtle extends ReLogoTurtle{
 			ask(collisions) {
 				destroy()
 			}
-			numCrashes++
+			numCrashes += collisions.size()
 			return
 		}
 		
