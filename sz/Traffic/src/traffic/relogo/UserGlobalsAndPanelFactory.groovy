@@ -34,6 +34,11 @@ public class UserGlobalsAndPanelFactory extends AbstractReLogoGlobalsAndPanelFac
 
 		addGlobal("poissonStreamRate")
 		addSliderWL("poissonStreamRate", "Car spawn rate", 0.1, 0.1, 1.0, 0.2)
+		
+		addMonitorWL("carsOnTheRoad", "Cars on the road now", 5)
+		addMonitorWL("numAllCars", "All cars (now and past)", 5)
+		addMonitorWL("crashRate", "Crash rate", 5)
+		addMonitorWL("meanTimeToDestination", "Mean time to destination", 5)
 
 	}
 }

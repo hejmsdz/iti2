@@ -13,11 +13,14 @@ import traffic.ReLogoTurtle
 
 class Destination extends ReLogoTurtle {
 	static instances = []
+	def totalTravelTime = 0
+	def numCarsArrived = 0
 	
 	def step(double dt) {
 		ask(userTurtlesHere()) { car ->
 			if (car.destination == this) {
-				println("Car reached destination!")
+				totalTravelTime += System.currentTimeMillis() - car.createdAt
+				numCarsArrived++
 				car.destroy()
 			}
 		}
@@ -25,5 +28,10 @@ class Destination extends ReLogoTurtle {
 	
 	def register() {
 		instances.add(this)
+	}
+	
+	def meanTravelTime() {
+		if (numCarsArrived == 0) return 0
+		totalTravelTime / numCarsArrived
 	}
 }

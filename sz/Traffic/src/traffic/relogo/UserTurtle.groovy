@@ -13,10 +13,21 @@ import traffic.ReLogoTurtle;
 class UserTurtle extends ReLogoTurtle{
 	enum State { ACCELERATING, BRAKING, DRIVING }
 	
+	long createdAt
 	def speed = 0
 	def state = State.ACCELERATING
 	Destination destination = null
 	def shouldDestroy = false
+	
+	def static numAllCars = 0
+	def static numCrashes = 0
+	
+	
+	public UserTurtle() {
+		super()
+		numAllCars++
+		createdAt = System.currentTimeMillis()
+	}
 
 	def step(double dt) {
 		if (speed < maxSpeed && state == State.ACCELERATING) {
@@ -48,6 +59,7 @@ class UserTurtle extends ReLogoTurtle{
 			ask(collisions) {
 				destroy()
 			}
+			numCrashes++
 			return
 		}
 		
