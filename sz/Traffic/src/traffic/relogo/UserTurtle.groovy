@@ -57,9 +57,10 @@ class UserTurtle extends ReLogoTurtle{
 		def collisions = userTurtlesHere()
 		if (collisions.size() > 1) {
 			ask(collisions) {
+				if (shouldDestroy) return
+				numCrashes += 1
 				destroy()
 			}
-			numCrashes += collisions.size()
 			return
 		}
 		
