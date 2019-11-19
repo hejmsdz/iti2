@@ -16,8 +16,9 @@ class UserObserver extends ReLogoObserver{
 		clearAll()
 		setDefaultShape(UserTurtle, "car")
 		setDefaultShape(Destination, "house")
+		areTrafficLightsGreenHorizontally = true
 		
-		def width = (UserPatch.laneWidth + 1) / 2
+		def width = (laneWidth + 1) / 2
 		def d = 15
 
 		[[-1, 0, red()], [1, 0, green()], [0, -1, blue()], [0, 1, yellow()]].eachWithIndex { pos, index ->
@@ -44,6 +45,7 @@ class UserObserver extends ReLogoObserver{
 		
 		ask(patches()) {
 			setColor()
+			changeLights(true)
 		}
 
 		resetTimer()
@@ -55,6 +57,17 @@ class UserObserver extends ReLogoObserver{
 		ask(turtles()){
 			step(dt)
 		}
+		
+		if (Calendar.getInstance().get(Calendar.SECOND) % 20 == 0) {
+			ask(patches()) {
+				changeLights(true)
+			}
+		} else if (Calendar.getInstance().get(Calendar.SECOND) % 10 == 0) {
+			ask(patches()) {
+				changeLights(false)
+			}
+		}
+		
 		resetTimer()
 	}
 }

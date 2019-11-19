@@ -11,8 +11,7 @@ import repast.simphony.relogo.schedule.Setup;
 import traffic.ReLogoPatch;
 
 class UserPatch extends ReLogoPatch{
-	static laneWidth = 4
-	
+
 	def setColor() {
 		def x = getPxcor()
 		def y = getPycor()
@@ -45,7 +44,28 @@ class UserPatch extends ReLogoPatch{
 	}
 
 	def colorTrafficLights(int x, int y) {
-		setPcolor(green())
+		if (Math.abs(x) > laneWidth && Math.abs(y) > laneWidth) {
+			setPcolor(green())
+		} else if ((x == 0 || y == 0) && (x + y).intdiv(2) % 2 == 0) {
+			setPcolor(white())
+		} else {
+			setPcolor(gray() - 3)
+		}
+	}
+	
+	def changeLights(boolean areTrafficLightsGreenHorizontally ) {
+		def x = getPxcor()
+		def y = getPycor()
+		
+		if (x == laneWidth + 1 && y == laneWidth) { // Right
+			areTrafficLightsGreenHorizontally ? setPcolor(lime()) : setPcolor(red())
+		} else if ((x == (laneWidth + 1) * -1) && (y == laneWidth * -1)) { // Left
+			areTrafficLightsGreenHorizontally ? setPcolor(lime()) : setPcolor(red())
+		} else if ((x == (laneWidth) * -1) && (y == laneWidth + 1)) { // Top
+			areTrafficLightsGreenHorizontally ? setPcolor(red()) : setPcolor(lime())
+		} else if (x == laneWidth && (y == (laneWidth + 1) * -1)) { // Down
+			areTrafficLightsGreenHorizontally ? setPcolor(red()) : setPcolor(lime())
+		}
 	}
 
 	def colorRoundabout(int x, int y) {

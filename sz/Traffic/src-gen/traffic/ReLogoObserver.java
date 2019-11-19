@@ -632,6 +632,27 @@ public class ReLogoObserver extends BaseObserver{
 	}
 
 	/**
+	 * Returns the value of the global variable areTrafficLightsGreenHorizontally.
+	 *
+	 * @return the value of the global variable areTrafficLightsGreenHorizontally
+	 */
+	@ReLogoBuilderGeneratedFor("global: areTrafficLightsGreenHorizontally")
+	public Object getAreTrafficLightsGreenHorizontally(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("areTrafficLightsGreenHorizontally");
+	}
+
+	/**
+	 * Sets the value of the global variable areTrafficLightsGreenHorizontally.
+	 *
+	 * @param value
+	 *            a value
+	 */
+	@ReLogoBuilderGeneratedFor("global: areTrafficLightsGreenHorizontally")
+	public void setAreTrafficLightsGreenHorizontally(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("areTrafficLightsGreenHorizontally",value);
+	}
+
+	/**
 	 * Returns the value of the global variable intersectionType.
 	 *
 	 * @return the value of the global variable intersectionType
@@ -674,6 +695,27 @@ public class ReLogoObserver extends BaseObserver{
 	}
 
 	/**
+	 * Returns the value of the global variable deceleration.
+	 *
+	 * @return the value of the global variable deceleration
+	 */
+	@ReLogoBuilderGeneratedFor("global: deceleration")
+	public Object getDeceleration(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("deceleration");
+	}
+
+	/**
+	 * Sets the value of the global variable deceleration.
+	 *
+	 * @param value
+	 *            a value
+	 */
+	@ReLogoBuilderGeneratedFor("global: deceleration")
+	public void setDeceleration(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("deceleration",value);
+	}
+
+	/**
 	 * Returns the value of the global variable maxSpeed.
 	 *
 	 * @return the value of the global variable maxSpeed
@@ -713,6 +755,48 @@ public class ReLogoObserver extends BaseObserver{
 	@ReLogoBuilderGeneratedFor("global: poissonStreamRate")
 	public void setPoissonStreamRate(Object value){
 		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("poissonStreamRate",value);
+	}
+
+	/**
+	 * Returns the value of the global variable laneWidth.
+	 *
+	 * @return the value of the global variable laneWidth
+	 */
+	@ReLogoBuilderGeneratedFor("global: laneWidth")
+	public Object getLaneWidth(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("laneWidth");
+	}
+
+	/**
+	 * Sets the value of the global variable laneWidth.
+	 *
+	 * @param value
+	 *            a value
+	 */
+	@ReLogoBuilderGeneratedFor("global: laneWidth")
+	public void setLaneWidth(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("laneWidth",value);
+	}
+
+	/**
+	 * Returns the value of the global variable turningThreshold.
+	 *
+	 * @return the value of the global variable turningThreshold
+	 */
+	@ReLogoBuilderGeneratedFor("global: turningThreshold")
+	public Object getTurningThreshold(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("turningThreshold");
+	}
+
+	/**
+	 * Sets the value of the global variable turningThreshold.
+	 *
+	 * @param value
+	 *            a value
+	 */
+	@ReLogoBuilderGeneratedFor("global: turningThreshold")
+	public void setTurningThreshold(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("turningThreshold",value);
 	}
 
 

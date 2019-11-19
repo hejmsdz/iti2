@@ -609,27 +609,6 @@ public class ReLogoTurtle extends BaseTurtle{
 	}
 
 	/**
-	 * Returns the value from the getLaneWidth() method of the underlying patch.
-	 * 
-	 * @return getLaneWidth() of type java.lang.Object
-	 */
-	@ReLogoBuilderGeneratedFor("traffic.relogo.UserPatch")
-	public java.lang.Object getLaneWidth(){
-		traffic.relogo.UserPatch p = (traffic.relogo.UserPatch)patchHere();
-		return p.getLaneWidth();
-	}
-
-	/**
-	 * Calls the setLaneWidth(java.lang.Object) method of the underlying patch.
-	 * 
-	 */
-	@ReLogoBuilderGeneratedFor("traffic.relogo.UserPatch")
-	public void setLaneWidth(java.lang.Object value){
-		traffic.relogo.UserPatch p = (traffic.relogo.UserPatch)patchHere();
-		p.setLaneWidth(value);
-	}
-
-	/**
 	 * Makes a directed userLink from a turtle to the caller then executes a set of
 	 * commands on the created userLink.
 	 * 
@@ -965,6 +944,27 @@ public class ReLogoTurtle extends BaseTurtle{
 	}
 
 	/**
+	 * Returns the value of the global variable areTrafficLightsGreenHorizontally.
+	 *
+	 * @return the value of the global variable areTrafficLightsGreenHorizontally
+	 */
+	@ReLogoBuilderGeneratedFor("global: areTrafficLightsGreenHorizontally")
+	public Object getAreTrafficLightsGreenHorizontally(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("areTrafficLightsGreenHorizontally");
+	}
+
+	/**
+	 * Sets the value of the global variable areTrafficLightsGreenHorizontally.
+	 *
+	 * @param value
+	 *            a value
+	 */
+	@ReLogoBuilderGeneratedFor("global: areTrafficLightsGreenHorizontally")
+	public void setAreTrafficLightsGreenHorizontally(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("areTrafficLightsGreenHorizontally",value);
+	}
+
+	/**
 	 * Returns the value of the global variable intersectionType.
 	 *
 	 * @return the value of the global variable intersectionType
@@ -1007,6 +1007,27 @@ public class ReLogoTurtle extends BaseTurtle{
 	}
 
 	/**
+	 * Returns the value of the global variable deceleration.
+	 *
+	 * @return the value of the global variable deceleration
+	 */
+	@ReLogoBuilderGeneratedFor("global: deceleration")
+	public Object getDeceleration(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("deceleration");
+	}
+
+	/**
+	 * Sets the value of the global variable deceleration.
+	 *
+	 * @param value
+	 *            a value
+	 */
+	@ReLogoBuilderGeneratedFor("global: deceleration")
+	public void setDeceleration(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("deceleration",value);
+	}
+
+	/**
 	 * Returns the value of the global variable maxSpeed.
 	 *
 	 * @return the value of the global variable maxSpeed
@@ -1046,6 +1067,48 @@ public class ReLogoTurtle extends BaseTurtle{
 	@ReLogoBuilderGeneratedFor("global: poissonStreamRate")
 	public void setPoissonStreamRate(Object value){
 		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("poissonStreamRate",value);
+	}
+
+	/**
+	 * Returns the value of the global variable laneWidth.
+	 *
+	 * @return the value of the global variable laneWidth
+	 */
+	@ReLogoBuilderGeneratedFor("global: laneWidth")
+	public Object getLaneWidth(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("laneWidth");
+	}
+
+	/**
+	 * Sets the value of the global variable laneWidth.
+	 *
+	 * @param value
+	 *            a value
+	 */
+	@ReLogoBuilderGeneratedFor("global: laneWidth")
+	public void setLaneWidth(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("laneWidth",value);
+	}
+
+	/**
+	 * Returns the value of the global variable turningThreshold.
+	 *
+	 * @return the value of the global variable turningThreshold
+	 */
+	@ReLogoBuilderGeneratedFor("global: turningThreshold")
+	public Object getTurningThreshold(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("turningThreshold");
+	}
+
+	/**
+	 * Sets the value of the global variable turningThreshold.
+	 *
+	 * @param value
+	 *            a value
+	 */
+	@ReLogoBuilderGeneratedFor("global: turningThreshold")
+	public void setTurningThreshold(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("turningThreshold",value);
 	}
 
 

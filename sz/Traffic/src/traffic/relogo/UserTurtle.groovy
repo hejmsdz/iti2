@@ -17,25 +17,49 @@ class UserTurtle extends ReLogoTurtle{
 	def state = State.ACCELERATING
 	Destination destination = null
 	def crashed = false
+	def isPrioritySet = false
 
 	def step(double dt) {
+		setLabel()
+		
+		// Stop for cars ahead
+		def carsAhead = inCone(userTurtles(), 4, 70).size()
+		if (carsAhead >= 1) {
+			state = State.BRAKING
+			setLabel(carsAhead + " car!")
+		} else {
+			state = State.ACCELERATING
+		}
+
+		// Stop for red light
+		def isRedLightAhead = (0..5).each {
+			if (patchAhead(it).pcolor == red()) {
+				state = State.BRAKING
+				setLabel("Green?")
+			} 
+		}
+		
+		// Accelerate or decelerate
 		if (speed < maxSpeed && state == State.ACCELERATING) {
 			speed += acceleration * dt
 		} else if (speed >= 0 && state == State.BRAKING) {
-			speed -= acceleration * dt
+			speed -= deceleration * dt
 		}
+
+		// Handle max speed
 		speed = Math.max(Math.min(speed, maxSpeed), 0)
 		
 		if (state == State.ACCELERATING && speed >= maxSpeed) {
 			state = State.DRIVING
 		}
-		
-		def threshold = 0.8
-		
-		if ((Math.abs(getXcor() - destination.getXcor()) < threshold) ^ (Math.abs(getYcor() - destination.getYcor()) < threshold)) {
+
+		// Turning
+		if ((Math.abs(getXcor() - destination.getXcor()) < turningThreshold) ^
+				(Math.abs(getYcor() - destination.getYcor()) < turningThreshold)) {
 			face(destination)
 		}
 
+		// Collision detection
 		if (crashed) {
 			die()
 			return
