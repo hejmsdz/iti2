@@ -14,9 +14,8 @@ class UserTurtle extends ReLogoTurtle{
 	enum State { ACCELERATING, BRAKING, DRIVING }
 	
 	def speed = 0
-	def maxSpeed = 10
-	def acceleration = 10
 	def state = State.ACCELERATING
+	def crashed = false
 	
 	def step(double dt) {
 		if (speed < maxSpeed && state == State.ACCELERATING) {
@@ -30,12 +29,17 @@ class UserTurtle extends ReLogoTurtle{
 			state = State.DRIVING
 		}
 		
+		if (crashed) {
+			die()
+			return
+		}
+		
 		forward(speed * dt)
 		
 		def collisions = userTurtlesHere()
 		if (collisions.size() > 1) {
 			ask(collisions) {
-				die()
+				crash()
 			}
 			return
 		}
@@ -43,5 +47,9 @@ class UserTurtle extends ReLogoTurtle{
 		if (patchHere().getPcolor() == green()) {
 			die()
 		}
+	}
+	
+	def crash() {
+		crashed = true
 	}
 }

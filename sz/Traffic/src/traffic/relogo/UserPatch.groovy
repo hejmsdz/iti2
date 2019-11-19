@@ -16,7 +16,21 @@ class UserPatch extends ReLogoPatch{
 	def setColor() {
 		def x = getPxcor()
 		def y = getPycor()
-		
+
+		if (intersectionType == "p2pIntersection") {
+			colorP2pIntersection(x, y)
+		} else if (intersectionType == "priority") {
+			colorPriority(x, y)
+		} else if (intersectionType == "trafficLights") {
+			colorTrafficLights(x, y)
+		}else if (intersectionType == "roundabout") {
+			colorRoundabout(x, y)
+		} else {
+			colorP2pIntersection(x, y)
+		}
+	}
+
+	def colorP2pIntersection(int x, int y) {
 		if (Math.abs(x) > laneWidth && Math.abs(y) > laneWidth) {
 			setPcolor(green())
 		} else if ((x == 0 || y == 0) && (x + y).intdiv(2) % 2 == 0) {
@@ -25,4 +39,17 @@ class UserPatch extends ReLogoPatch{
 			setPcolor(gray() - 3)
 		}
 	}
+
+	def colorPriority(int x, int y) {
+		setPcolor(green())
+	}
+
+	def colorTrafficLights(int x, int y) {
+		setPcolor(green())
+	}
+
+	def colorRoundabout(int x, int y) {
+		setPcolor(green())
+	}
+
 }

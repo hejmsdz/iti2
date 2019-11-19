@@ -4,7 +4,7 @@ import repast.simphony.relogo.factories.AbstractReLogoGlobalsAndPanelFactory
 
 public class UserGlobalsAndPanelFactory extends AbstractReLogoGlobalsAndPanelFactory{
 	public void addGlobalsAndPanelComponents(){
-		
+
 		/**
 		 * Place custom panels and globals below, for example:
 		 * 
@@ -21,8 +21,19 @@ public class UserGlobalsAndPanelFactory extends AbstractReLogoGlobalsAndPanelFac
 	        addStateChangeButton("change")
 	        // State change button with label (method name in observer, label)
 	        addStateChangeButtonWL("changeSomething","Change Something")
-	        
 		 */
+
+		addGlobal("intersectionType")
+		addChooserWL("intersectionType", "Intersection type", ["p2pIntersection", "priority", "trafficLights", "roundabout"], 0)
+
+		addGlobal("acceleration")
+		addSliderWL("acceleration", "Car acceleration", 1, 1, 100, 10)
+
+		addGlobal("maxSpeed")
+		addSliderWL("maxSpeed", "Car maximum speed", 1, 1, 100, 10)
+
+		addGlobal("poissonStreamRate")
+		addSliderWL("poissonStreamRate", "Car spawn rate", 0.1, 0.1, 1.0, 0.2)
 
 	}
 }
