@@ -19,7 +19,7 @@ class Destination extends ReLogoTurtle {
 	def step(double dt) {
 		ask(userTurtlesHere()) { car ->
 			if (car.destination == this) {
-				totalTravelTime += System.currentTimeMillis() - car.createdAt
+				totalTravelTime += (System.currentTimeMillis() - car.createdAt) / 1000
 				numCarsArrived++
 				car.destroy()
 			}
