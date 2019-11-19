@@ -17,13 +17,16 @@ class UserObserver extends ReLogoObserver{
 		setDefaultShape(UserTurtle, "car")
 		setDefaultShape(Destination, "house")
 		
-		def w = (UserPatch.laneWidth + 1) / 2
+		def width = (UserPatch.laneWidth + 1) / 2
 		def d = 15
+
 		[[-1, 0, red()], [1, 0, green()], [0, -1, blue()], [0, 1, yellow()]].eachWithIndex { pos, index ->
+
 			def (x, y, color) = pos
-			def sign = (x + y) * w
+			def sign = (x + y) * width
 			def xOffset = -sign * (1 - Math.abs(x))
 			def yOffset = sign * (1 - Math.abs(y))
+
 			createPoissonStreams(1) {
 				setxy(d * x + xOffset, d * y + yOffset)
 				facexy(xOffset, yOffset)

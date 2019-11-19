@@ -12,7 +12,6 @@ import repast.simphony.relogo.schedule.Setup
 import traffic.ReLogoTurtle
 
 class PoissonStream extends ReLogoTurtle {
-	def rate = 0.2
 	def timeToHatch = 0
 	def destinations = []
 	
@@ -24,7 +23,7 @@ class PoissonStream extends ReLogoTurtle {
 			hatchUserTurtles(1) {
 				destination = randomDestination
 			}
-			timeToHatch = randomExponential(rate)
+			timeToHatch = randomExponential(poissonStreamRate)
 		}
 	}
 }

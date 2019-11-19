@@ -14,11 +14,10 @@ class UserTurtle extends ReLogoTurtle{
 	enum State { ACCELERATING, BRAKING, DRIVING }
 	
 	def speed = 0
-	def maxSpeed = 10
-	def acceleration = 10
 	def state = State.ACCELERATING
 	Destination destination = null
-	
+	def crashed = false
+
 	def step(double dt) {
 		if (speed < maxSpeed && state == State.ACCELERATING) {
 			speed += acceleration * dt
@@ -36,13 +35,18 @@ class UserTurtle extends ReLogoTurtle{
 		if ((Math.abs(getXcor() - destination.getXcor()) < threshold) ^ (Math.abs(getYcor() - destination.getYcor()) < threshold)) {
 			face(destination)
 		}
+
+		if (crashed) {
+			die()
+			return
+		}
 		
 		forward(speed * dt)
 		
 		def collisions = userTurtlesHere()
 		if (collisions.size() > 1) {
 			ask(collisions) {
-				die()
+				crash()
 			}
 			return
 		}
@@ -55,5 +59,9 @@ class UserTurtle extends ReLogoTurtle{
 	def setDestination(Destination value) {
 		destination = value 
 		setColor(destination.getColor())
+	}
+
+	def crash() {
+		crashed = true
 	}
 }

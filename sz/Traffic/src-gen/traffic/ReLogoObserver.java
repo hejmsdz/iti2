@@ -631,5 +631,89 @@ public class ReLogoObserver extends BaseObserver{
 		return userLink(oneEnd.getWho(), otherEnd.getWho());
 	}
 
+	/**
+	 * Returns the value of the global variable intersectionType.
+	 *
+	 * @return the value of the global variable intersectionType
+	 */
+	@ReLogoBuilderGeneratedFor("global: intersectionType")
+	public Object getIntersectionType(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("intersectionType");
+	}
+
+	/**
+	 * Sets the value of the global variable intersectionType.
+	 *
+	 * @param value
+	 *            a value
+	 */
+	@ReLogoBuilderGeneratedFor("global: intersectionType")
+	public void setIntersectionType(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("intersectionType",value);
+	}
+
+	/**
+	 * Returns the value of the global variable acceleration.
+	 *
+	 * @return the value of the global variable acceleration
+	 */
+	@ReLogoBuilderGeneratedFor("global: acceleration")
+	public Object getAcceleration(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("acceleration");
+	}
+
+	/**
+	 * Sets the value of the global variable acceleration.
+	 *
+	 * @param value
+	 *            a value
+	 */
+	@ReLogoBuilderGeneratedFor("global: acceleration")
+	public void setAcceleration(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("acceleration",value);
+	}
+
+	/**
+	 * Returns the value of the global variable maxSpeed.
+	 *
+	 * @return the value of the global variable maxSpeed
+	 */
+	@ReLogoBuilderGeneratedFor("global: maxSpeed")
+	public Object getMaxSpeed(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("maxSpeed");
+	}
+
+	/**
+	 * Sets the value of the global variable maxSpeed.
+	 *
+	 * @param value
+	 *            a value
+	 */
+	@ReLogoBuilderGeneratedFor("global: maxSpeed")
+	public void setMaxSpeed(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("maxSpeed",value);
+	}
+
+	/**
+	 * Returns the value of the global variable poissonStreamRate.
+	 *
+	 * @return the value of the global variable poissonStreamRate
+	 */
+	@ReLogoBuilderGeneratedFor("global: poissonStreamRate")
+	public Object getPoissonStreamRate(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("poissonStreamRate");
+	}
+
+	/**
+	 * Sets the value of the global variable poissonStreamRate.
+	 *
+	 * @param value
+	 *            a value
+	 */
+	@ReLogoBuilderGeneratedFor("global: poissonStreamRate")
+	public void setPoissonStreamRate(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("poissonStreamRate",value);
+	}
+
 
 }
