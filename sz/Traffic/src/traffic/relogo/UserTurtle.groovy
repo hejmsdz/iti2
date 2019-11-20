@@ -13,11 +13,22 @@ import traffic.ReLogoTurtle;
 class UserTurtle extends ReLogoTurtle{
 	enum State { ACCELERATING, BRAKING, DRIVING }
 	
+	long createdAt
 	def speed = 0
 	def state = State.ACCELERATING
 	Destination destination = null
-	def crashed = false
 	def isPrioritySet = false
+	def shouldDestroy = false
+	
+	def static numAllCars = 0
+	def static numCrashes = 0
+	
+	
+	public UserTurtle() {
+		super()
+		numAllCars++
+		createdAt = System.currentTimeMillis()
+	}
 
 	def step(double dt) {
 		setLabel()
@@ -60,7 +71,7 @@ class UserTurtle extends ReLogoTurtle{
 		}
 
 		// Collision detection
-		if (crashed) {
+		if (shouldDestroy) {
 			die()
 			return
 		}
@@ -70,7 +81,9 @@ class UserTurtle extends ReLogoTurtle{
 		def collisions = userTurtlesHere()
 		if (collisions.size() > 1) {
 			ask(collisions) {
-				crash()
+				if (shouldDestroy) return
+				numCrashes += 1
+				destroy()
 			}
 			return
 		}
@@ -85,7 +98,7 @@ class UserTurtle extends ReLogoTurtle{
 		setColor(destination.getColor())
 	}
 
-	def crash() {
-		crashed = true
+	def destroy() {
+		shouldDestroy = true
 	}
 }

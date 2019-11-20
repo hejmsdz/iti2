@@ -10,7 +10,6 @@ import repast.simphony.relogo.schedule.Setup;
 import traffic.ReLogoObserver;
 
 class UserObserver extends ReLogoObserver{
-
 	@Setup
 	def setup(){
 		clearAll()
@@ -69,5 +68,47 @@ class UserObserver extends ReLogoObserver{
 		}
 		
 		resetTimer()
+	}
+	
+	def carsOnTheRoad() {
+		count(userTurtles())
+	}
+	
+	def crashRate() {
+		def n = numAllCars()
+		if (n == 0)
+			return 0
+		UserTurtle.numCrashes / n
+	}
+	
+	def numAllCars() {
+		UserTurtle.numAllCars
+	}
+	
+	def meanTravelTime() {
+		def sum = 0
+		def count = 0
+		ask(destinations()) {
+			sum += totalTravelTime
+			count += numCarsArrived
+		}
+		if (count == 0) return 0
+		sum / count
+	}
+	
+	def meanTravelTimeN() {
+		Destination.instances[3].meanTravelTime()
+	}
+	
+	def meanTravelTimeS() {
+		Destination.instances[2].meanTravelTime()
+	}
+	
+	def meanTravelTimeW() {
+		Destination.instances[0].meanTravelTime()
+	}
+	
+	def meanTravelTimeE() {
+		Destination.instances[1].meanTravelTime()
 	}
 }
