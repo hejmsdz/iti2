@@ -536,27 +536,6 @@ public class ReLogoLink<T> extends BaseLink<T>	{
 	}
 
 	/**
-	 * Returns the value of the global variable laneWidth.
-	 *
-	 * @return the value of the global variable laneWidth
-	 */
-	@ReLogoBuilderGeneratedFor("global: laneWidth")
-	public Object getLaneWidth(){
-		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("laneWidth");
-	}
-
-	/**
-	 * Sets the value of the global variable laneWidth.
-	 *
-	 * @param value
-	 *            a value
-	 */
-	@ReLogoBuilderGeneratedFor("global: laneWidth")
-	public void setLaneWidth(Object value){
-		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("laneWidth",value);
-	}
-
-	/**
 	 * Returns the value of the global variable turningThreshold.
 	 *
 	 * @return the value of the global variable turningThreshold

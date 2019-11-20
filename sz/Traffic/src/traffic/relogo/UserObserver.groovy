@@ -17,7 +17,7 @@ class UserObserver extends ReLogoObserver{
 		setDefaultShape(Destination, "house")
 		areTrafficLightsGreenHorizontally = true
 		
-		def width = (laneWidth + 1) / 2
+		def width = (UserPatch.laneWidth + 1) / 2
 		def d = 15
 
 		[[-1, 0, red()], [1, 0, green()], [0, -1, blue()], [0, 1, yellow()]].eachWithIndex { pos, index ->

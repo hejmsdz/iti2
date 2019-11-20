@@ -40,9 +40,6 @@ public class UserGlobalsAndPanelFactory extends AbstractReLogoGlobalsAndPanelFac
 		addGlobal("poissonStreamRate")
 		addSliderWL("poissonStreamRate", "Car spawn rate", 0.1, 0.1, 2.0, 1.3)
 
-		addGlobal("laneWidth")
-		addSliderWL("laneWidth", "Lane width", 1, 1, 8, 2)
-
 		addGlobal("turningThreshold")
 		addSliderWL("turningThreshold", "Turning threshold", 0.0, 0.1, 10.0, 0.2)
 
