@@ -59,11 +59,11 @@ class UserPatch extends ReLogoPatch{
 		
 		if (x == laneWidth + 1 && y == laneWidth) { // Right
 			areTrafficLightsGreenHorizontally ? setPcolor(lime()) : setPcolor(red())
-		} else if ((x == (laneWidth + 1) * -1) && (y == laneWidth * -1)) { // Left
+		} else if ((x == -(laneWidth + 1)) && (y == -laneWidth)) { // Left
 			areTrafficLightsGreenHorizontally ? setPcolor(lime()) : setPcolor(red())
-		} else if ((x == (laneWidth) * -1) && (y == laneWidth + 1)) { // Top
+		} else if ((x == -laneWidth) && (y == laneWidth + 1)) { // Top
 			areTrafficLightsGreenHorizontally ? setPcolor(red()) : setPcolor(lime())
-		} else if (x == laneWidth && (y == (laneWidth + 1) * -1)) { // Down
+		} else if (x == laneWidth && (y == -(laneWidth + 1))) { // Down
 			areTrafficLightsGreenHorizontally ? setPcolor(red()) : setPcolor(lime())
 		}
 	}
