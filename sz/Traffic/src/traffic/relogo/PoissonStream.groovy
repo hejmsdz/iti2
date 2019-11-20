@@ -19,6 +19,9 @@ class PoissonStream extends ReLogoTurtle {
 		if (timeToHatch > 0) {
 			timeToHatch -= dt
 		} else {
+			if (inCone(userTurtles(), 4, 70).size()) {
+				return
+			}
 			def randomDestination = Destination.instances[destinations[random(destinations.size)]]
 			hatchUserTurtles(1) {
 				destination = randomDestination
