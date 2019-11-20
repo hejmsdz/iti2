@@ -11,7 +11,7 @@ import repast.simphony.relogo.schedule.Setup;
 import traffic.ReLogoPatch;
 
 class UserPatch extends ReLogoPatch {
-	static laneWidth = 4
+	static laneWidth = 2
 
 	def setColor() {
 		def x = getPxcor()
