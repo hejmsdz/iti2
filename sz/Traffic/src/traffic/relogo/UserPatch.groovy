@@ -53,18 +53,18 @@ class UserPatch extends ReLogoPatch{
 		}
 	}
 	
-	def changeLights(boolean areTrafficLightsGreenHorizontally ) {
+	def changeLights(boolean greenHorizontally) {
 		def x = getPxcor()
 		def y = getPycor()
 		
 		if (x == laneWidth + 1 && y == laneWidth) { // Right
-			areTrafficLightsGreenHorizontally ? setPcolor(lime()) : setPcolor(red())
+			greenHorizontally ? setPcolor(lime()) : setPcolor(red())
 		} else if ((x == -(laneWidth + 1)) && (y == -laneWidth)) { // Left
-			areTrafficLightsGreenHorizontally ? setPcolor(lime()) : setPcolor(red())
+			greenHorizontally ? setPcolor(lime()) : setPcolor(red())
 		} else if ((x == -laneWidth) && (y == laneWidth + 1)) { // Top
-			areTrafficLightsGreenHorizontally ? setPcolor(red()) : setPcolor(lime())
+			greenHorizontally ? setPcolor(red()) : setPcolor(lime())
 		} else if (x == laneWidth && (y == -(laneWidth + 1))) { // Down
-			areTrafficLightsGreenHorizontally ? setPcolor(red()) : setPcolor(lime())
+			greenHorizontally ? setPcolor(red()) : setPcolor(lime())
 		}
 	}
 
