@@ -18,6 +18,8 @@ class UserObserver extends ReLogoObserver{
 		
 		def width = (UserPatch.laneWidth + 1) / 2
 		def d = 15
+		
+		def yieldZones = []
 
 		[[-1, 0, red()], [1, 0, green()], [0, -1, blue()], [0, 1, yellow()]].eachWithIndex { pos, index ->
 
@@ -33,6 +35,14 @@ class UserObserver extends ReLogoObserver{
 				setColor(white())
 			}
 			
+			createYieldZones(1) {
+				setxy(UserPatch.laneWidth * 1.7 * x + xOffset, UserPatch.laneWidth * 1.7 * y + yOffset)
+				setSize(1)
+				setColor(black())
+				facexy(xOffset, yOffset)
+				yieldZones.add(it)
+			}
+			
 			createDestinations(1) {
 				setxy(d * x - xOffset, d * y - yOffset)
 				facexy(xOffset, yOffset)
@@ -40,6 +50,11 @@ class UserObserver extends ReLogoObserver{
 				register()
 			}
 		}
+		
+		yieldZones[2].yieldsTo = [yieldZones[1]]
+		yieldZones[1].yieldsTo = [yieldZones[3]]
+		yieldZones[3].yieldsTo = [yieldZones[0]]
+		yieldZones[0].yieldsTo = [yieldZones[2]]
 		
 		ask(patches()) {
 			setColor()

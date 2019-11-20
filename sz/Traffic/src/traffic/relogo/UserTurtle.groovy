@@ -30,6 +30,14 @@ class UserTurtle extends ReLogoTurtle{
 	}
 
 	def step(double dt) {
+		def carsAhead = inCone(userTurtles(), 4, 70).size()
+		if (carsAhead >= 1) {
+			state = State.BRAKING
+			setLabel(carsAhead + " car!")
+		} else {
+			state = State.ACCELERATING
+		}
+		
 		if (speed < maxSpeed && state == State.ACCELERATING) {
 			speed += acceleration * dt
 		} else if (speed >= 0 && state == State.BRAKING) {
@@ -45,6 +53,15 @@ class UserTurtle extends ReLogoTurtle{
 		
 		if ((Math.abs(getXcor() - destination.getXcor()) < threshold) ^ (Math.abs(getYcor() - destination.getYcor()) < threshold)) {
 			face(destination)
+		}
+		
+		if (shouldYield()) {
+			setLabel("giving way")
+			state = State.BRAKING
+			speed = 0
+		} else if (state == State.BRAKING) {
+			setLabel()
+			state = State.ACCELERATING
 		}
 
 		if (shouldDestroy) {
@@ -67,6 +84,16 @@ class UserTurtle extends ReLogoTurtle{
 		if (patchHere().getPcolor() == green()) {
 			die()
 		}
+	}
+	
+	def shouldYield() {
+		def yield = false
+		ask(yieldZonesHere()) {
+			if (!hasRightOfWay()) {
+				yield = true
+			}
+		}
+		yield
 	}
 	
 	def setDestination(Destination value) {
