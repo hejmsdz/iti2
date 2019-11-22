@@ -10,6 +10,8 @@ import repast.simphony.relogo.schedule.Setup;
 import traffic.ReLogoObserver;
 
 class UserObserver extends ReLogoObserver{
+	def yieldZones = []
+	
 	@Setup
 	def setup(){
 		clearAll()
@@ -18,8 +20,7 @@ class UserObserver extends ReLogoObserver{
 		
 		def width = (UserPatch.laneWidth + 1) / 2
 		def d = 15
-		
-		def yieldZones = []
+		yieldZones = []
 
 		[[-1, 0, red()], [1, 0, green()], [0, -1, blue()], [0, 1, yellow()]].eachWithIndex { pos, index ->
 
@@ -69,7 +70,17 @@ class UserObserver extends ReLogoObserver{
 		ask(turtles()){
 			step(dt)
 		}
+		resolveDeadlock()
 		resetTimer()
+	}
+	
+	def resolveDeadlock() {
+		def isDeadlocked = yieldZones().every { !it.hasRightOfWay() } 
+
+		if (isDeadlocked) {
+			println("Deadlock occurred!")
+			pause() 
+		}
 	}
 	
 	def carsOnTheRoad() {

@@ -13,7 +13,7 @@ import traffic.ReLogoTurtle
 
 class YieldZone extends ReLogoTurtle {
 	Collection<YieldZone> yieldsTo = []
-	
+
 	def step(double dt) {
 		setColor(hasRightOfWay() ? sky() : red())
 	}
