@@ -42,10 +42,10 @@ public class UserGlobalsAndPanelFactory extends AbstractReLogoGlobalsAndPanelFac
 		addMonitorWL("numAllCars", "All cars (now and past)", 5)
 		addMonitorWL("crashRate", "Crash rate", 5)
 		addMonitorWL("meanTravelTime", "Mean travel time (overall)", 5)
-		addMonitorWL("meanTravelTimeN", "Mean travel time (north destination)", 5)
-		addMonitorWL("meanTravelTimeS", "Mean travel time (south destination)", 5)
-		addMonitorWL("meanTravelTimeW", "Mean travel time (west destination)", 5)
-		addMonitorWL("meanTravelTimeE", "Mean travel time (east destination)", 5)
+		addMonitorWL("meanTravelTimeN", "Mean travel time (north source)", 5)
+		addMonitorWL("meanTravelTimeS", "Mean travel time (south source)", 5)
+		addMonitorWL("meanTravelTimeW", "Mean travel time (west source)", 5)
+		addMonitorWL("meanTravelTimeE", "Mean travel time (east source)", 5)
 
 	}
 }

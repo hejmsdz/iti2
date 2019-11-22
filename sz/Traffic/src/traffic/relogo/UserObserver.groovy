@@ -11,6 +11,7 @@ import traffic.ReLogoObserver;
 
 class UserObserver extends ReLogoObserver{
 	def yieldZones = []
+	def streams = []
 	
 	@Setup
 	def setup(){
@@ -41,6 +42,7 @@ class UserObserver extends ReLogoObserver{
 				facexy(xOffset, yOffset)
 				destinations = [0,1,2,3] - index
 				setColor(white())
+				streams.add(it)
 			}
 			
 			createYieldZones(1) {
@@ -109,7 +111,7 @@ class UserObserver extends ReLogoObserver{
 	def meanTravelTime() {
 		def sum = 0
 		def count = 0
-		ask(destinations()) {
+		ask(poissonStreams()) {
 			sum += totalTravelTime
 			count += numCarsArrived
 		}
@@ -118,18 +120,18 @@ class UserObserver extends ReLogoObserver{
 	}
 	
 	def meanTravelTimeN() {
-		Destination.instances[3].meanTravelTime()
+		streams[3].meanTravelTime()
 	}
 	
 	def meanTravelTimeS() {
-		Destination.instances[2].meanTravelTime()
+		streams[2].meanTravelTime()
 	}
 	
 	def meanTravelTimeW() {
-		Destination.instances[0].meanTravelTime()
+		streams[0].meanTravelTime()
 	}
 	
 	def meanTravelTimeE() {
-		Destination.instances[1].meanTravelTime()
+		streams[1].meanTravelTime()
 	}
 }

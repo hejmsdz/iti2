@@ -17,6 +17,7 @@ class UserTurtle extends ReLogoTurtle{
 	def speed = 0.0
 	def state = State.ACCELERATING
 	Destination destination = null
+	PoissonStream source = null
 	def shouldDestroy = false
 	
 	def static numAllCars = 0
