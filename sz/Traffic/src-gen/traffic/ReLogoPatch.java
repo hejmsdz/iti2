@@ -905,6 +905,27 @@ public class ReLogoPatch extends BasePatch{
 	}
 
 	/**
+	 * Returns the value of the global variable deceleration.
+	 *
+	 * @return the value of the global variable deceleration
+	 */
+	@ReLogoBuilderGeneratedFor("global: deceleration")
+	public Object getDeceleration(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("deceleration");
+	}
+
+	/**
+	 * Sets the value of the global variable deceleration.
+	 *
+	 * @param value
+	 *            a value
+	 */
+	@ReLogoBuilderGeneratedFor("global: deceleration")
+	public void setDeceleration(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("deceleration",value);
+	}
+
+	/**
 	 * Returns the value of the global variable maxSpeed.
 	 *
 	 * @return the value of the global variable maxSpeed

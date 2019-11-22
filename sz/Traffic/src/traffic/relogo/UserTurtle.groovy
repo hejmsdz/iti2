@@ -14,7 +14,6 @@ class UserTurtle extends ReLogoTurtle{
 	enum State { ACCELERATING, BRAKING, DRIVING }
 	
 	public long createdAt
-	static deceleration = 75
 	def speed = 0.0
 	def state = State.ACCELERATING
 	Destination destination = null

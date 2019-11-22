@@ -77,6 +77,7 @@ class UserObserver extends ReLogoObserver{
 	}
 	
 	def crashRate() {
+		return UserTurtle.numCrashes
 		def n = numAllCars()
 		if (n == 0)
 			return 0

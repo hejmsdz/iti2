@@ -28,6 +28,9 @@ public class UserGlobalsAndPanelFactory extends AbstractReLogoGlobalsAndPanelFac
 
 		addGlobal("acceleration")
 		addSliderWL("acceleration", "Car acceleration", 1, 1, 100, 10)
+		
+		addGlobal("deceleration")
+		addSliderWL("deceleration", "Car brake deceleration", 1, 1, 100, 75)
 
 		addGlobal("maxSpeed")
 		addSliderWL("maxSpeed", "Car maximum speed", 1, 1, 100, 10)
