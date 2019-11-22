@@ -11,7 +11,7 @@ import repast.simphony.relogo.schedule.Setup;
 import traffic.ReLogoTurtle;
 
 class UserTurtle extends ReLogoTurtle{
-	enum State { ACCELERATING, BRAKING, DRIVING }
+	enum State { ACCELERATING, BRAKING }
 	
 	public long createdAt
 	def speed = 0.0
@@ -37,15 +37,10 @@ class UserTurtle extends ReLogoTurtle{
 		state = State.ACCELERATING
 	}
 	
-	def drive() {
-		state = State.DRIVING
-	}
-
+	
 	def step(double dt) {
 		giveWay()
-		
 		move(dt)
-		
 		turnToDestination()
 		detectCollisions()
 		dieIfDestroyed()
