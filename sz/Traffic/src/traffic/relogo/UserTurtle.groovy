@@ -42,8 +42,7 @@ class UserTurtle extends ReLogoTurtle{
 	}
 
 	def step(double dt) {
-		brakeIfCarsAhead()
-		// giveWay()
+		giveWay()
 		
 		move(dt)
 		
@@ -52,24 +51,19 @@ class UserTurtle extends ReLogoTurtle{
 		dieIfDestroyed()
 	}
 	
-	def brakeIfCarsAhead() {
+	def hasCarsAhead() {
 		def cars = userTurtles()
 		cars.remove(this)
-		def carsAhead = inCone(cars, 4, 70)
-		if (carsAhead.size() >= 1) {
-			brake()
-			setLabel("$carsAhead")
-		} else {
-			accelerate()
-			setLabel('free way!')
-		}
+		return inCone(cars, 4, 70).size() >= 1
 	}
 	
 	def giveWay() {
-		if (shouldYield()) {
+		if (shouldYield() || hasCarsAhead()) {
+			setLabel("yield!")
 			brake()
 		} else if (state == State.BRAKING) {
 			accelerate()
+			setLabel("")
 		}
 	}
 	
