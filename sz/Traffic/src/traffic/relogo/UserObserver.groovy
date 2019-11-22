@@ -70,12 +70,12 @@ class UserObserver extends ReLogoObserver{
 		ask(turtles()){
 			step(dt)
 		}
-		resolveDeadlock()
+		checkDeadlock()
 		resetTimer()
 	}
 	
-	def resolveDeadlock() {
-		def isDeadlocked = yieldZones().every { !it.hasRightOfWay() } 
+	def checkDeadlock() {
+		def isDeadlocked = yieldZones().every { !it.hasRightOfWay() } && userTurtles().every { it.speed == 0 } 
 
 		if (isDeadlocked) {
 			println("Deadlock occurred!")

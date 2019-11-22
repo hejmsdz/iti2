@@ -59,11 +59,9 @@ class UserTurtle extends ReLogoTurtle{
 	
 	def giveWay() {
 		if (shouldYield() || hasCarsAhead()) {
-			setLabel("yield!")
 			brake()
 		} else if (state == State.BRAKING) {
 			accelerate()
-			setLabel("")
 		}
 	}
 	
@@ -110,13 +108,7 @@ class UserTurtle extends ReLogoTurtle{
 	}
 	
 	def shouldYield() {
-		def yield = false
-		ask(yieldZonesHere()) {
-			if (!hasRightOfWay()) {
-				yield = true
-			}
-		}
-		yield
+		return yieldZonesHere().any { !it.hasRightOfWay() }
 	}
 	
 	def setDestination(Destination value) {
