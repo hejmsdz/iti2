@@ -18,6 +18,13 @@ class UserObserver extends ReLogoObserver{
 		setDefaultShape(UserTurtle, "car")
 		setDefaultShape(Destination, "house")
 		
+		UserTurtle.numCrashes = 0
+		UserTurtle.numAllCars = 0
+		ask(destinations()) {
+			totalTravelTime = 0
+			numCarsArrived = 0
+		}
+		
 		def width = (UserPatch.laneWidth + 1) / 2
 		def d = 15
 		yieldZones = []
@@ -51,11 +58,12 @@ class UserObserver extends ReLogoObserver{
 				register()
 			}
 		}
-		
+
 		yieldZones[2].yieldsTo = [yieldZones[1]]
 		yieldZones[1].yieldsTo = [yieldZones[3]]
 		yieldZones[3].yieldsTo = [yieldZones[0]]
 		yieldZones[0].yieldsTo = [yieldZones[2]]
+		
 		
 		ask(patches()) {
 			setColor()
@@ -75,7 +83,7 @@ class UserObserver extends ReLogoObserver{
 	}
 	
 	def checkDeadlock() {
-		def isDeadlocked = yieldZones().every { !it.hasRightOfWay() } && userTurtles().every { it.speed == 0 } 
+		def isDeadlocked = userTurtles().size() > 0 && userTurtles().every { it.speed == 0 && it.state != UserTurtle.State.ACCELERATING } 
 
 		if (isDeadlocked) {
 			println("Deadlock occurred!")
