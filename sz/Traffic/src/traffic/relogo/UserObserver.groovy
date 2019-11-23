@@ -94,8 +94,7 @@ class UserObserver extends ReLogoObserver{
 
 		if (isDeadlocked) {
 			println("Deadlock occurred!")
-			yieldZones().get(0).unlockYieldZone()
-//			pause() 
+			yieldZones().get(0).unlockYieldZone() // Unlock any zone
 		}
 	}
 	
