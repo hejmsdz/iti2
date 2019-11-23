@@ -11,12 +11,13 @@ import repast.simphony.relogo.schedule.Setup;
 import traffic.ReLogoTurtle;
 
 class UserTurtle extends ReLogoTurtle{
-	enum State { ACCELERATING, BRAKING, DRIVING }
+	enum State { ACCELERATING, BRAKING }
 	
-	long createdAt
-	def speed = 0
+	public long createdAt
+	def speed = 0.0
 	def state = State.ACCELERATING
 	Destination destination = null
+	PoissonStream source = null
 	def shouldDestroy = false
 	
 	def static numAllCars = 0
@@ -28,32 +29,58 @@ class UserTurtle extends ReLogoTurtle{
 		numAllCars++
 		createdAt = System.currentTimeMillis()
 	}
-
+	
+	def brake() {
+		state = State.BRAKING
+	}
+	
+	def accelerate() {
+		state = State.ACCELERATING
+	}
+	
+	
 	def step(double dt) {
-		if (speed < maxSpeed && state == State.ACCELERATING) {
+		giveWay()
+		move(dt)
+		turnToDestination()
+		detectCollisions()
+		dieIfDestroyed()
+	}
+	
+	def hasCarsAhead() {
+		def cars = userTurtles()
+		cars.remove(this)
+		return inCone(cars, 4, 70).size() >= 1
+	}
+	
+	def giveWay() {
+		if (shouldYield() || hasCarsAhead()) {
+			brake()
+		} else if (state == State.BRAKING) {
+			accelerate()
+		}
+	}
+	
+	def move(double dt) {
+		def preSpeed = speed
+		if (state == State.ACCELERATING) {
 			speed += acceleration * dt
 		} else if (speed >= 0 && state == State.BRAKING) {
-			speed -= acceleration * dt
+			speed -= deceleration * dt
 		}
 		speed = Math.max(Math.min(speed, maxSpeed), 0)
-		
-		if (state == State.ACCELERATING && speed >= maxSpeed) {
-			state = State.DRIVING
-		}
-		
+		forward(speed * dt)
+	}
+	
+	def turnToDestination() {
 		def threshold = 0.8
 		
 		if ((Math.abs(getXcor() - destination.getXcor()) < threshold) ^ (Math.abs(getYcor() - destination.getYcor()) < threshold)) {
 			face(destination)
 		}
-
-		if (shouldDestroy) {
-			die()
-			return
-		}
-		
-		forward(speed * dt)
-		
+	}
+	
+	def detectCollisions() {
 		def collisions = userTurtlesHere()
 		if (collisions.size() > 1) {
 			ask(collisions) {
@@ -63,10 +90,21 @@ class UserTurtle extends ReLogoTurtle{
 			}
 			return
 		}
+	}
+	
+	def dieIfDestroyed() {
+		if (shouldDestroy) {
+			die()
+			return
+		}
 		
 		if (patchHere().getPcolor() == green()) {
 			die()
 		}
+	}
+	
+	def shouldYield() {
+		return yieldZonesHere().any { !it.hasRightOfWay() }
 	}
 	
 	def setDestination(Destination value) {

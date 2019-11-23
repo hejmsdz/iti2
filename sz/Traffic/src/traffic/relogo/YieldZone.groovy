@@ -11,20 +11,18 @@ import repast.simphony.relogo.schedule.Go
 import repast.simphony.relogo.schedule.Setup
 import traffic.ReLogoTurtle
 
-class Destination extends ReLogoTurtle {
-	static instances = []
-	
+class YieldZone extends ReLogoTurtle {
+	Collection<YieldZone> yieldsTo = []
+
 	def step(double dt) {
-		ask(userTurtlesHere()) { car ->
-			if (car.destination == this) {
-				car.source.totalTravelTime += (System.currentTimeMillis() - car.createdAt) / 1000
-				car.source.numCarsArrived++
-				car.destroy()
-			}
-		}
+		setColor(hasRightOfWay() ? sky() : red())
 	}
 	
-	def register() {
-		instances.add(this)
+	def hasRightOfWay() {
+		yieldsTo.empty || yieldsTo.every { !it.anyCarHere() }
+	}
+	
+	def anyCarHere() {
+		inRadius(userTurtles(), UserPatch.laneWidth).size() > 0
 	}
 }

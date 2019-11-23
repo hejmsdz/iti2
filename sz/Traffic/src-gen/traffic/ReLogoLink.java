@@ -354,6 +354,119 @@ public class ReLogoLink<T> extends BaseLink<T>	{
 	}
 
 	/**
+	 * Returns an agentset of yieldZones on a given patch.
+	 * 
+	 * @param p
+	 *            a patch
+	 * @return agentset of yieldZones on patch p
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.YieldZone")
+	public AgentSet<traffic.relogo.YieldZone> yieldZonesOn(Patch p){
+		AgentSet<traffic.relogo.YieldZone> result = new AgentSet<traffic.relogo.YieldZone>();						
+		for (Turtle t : Utility.getTurtlesOnGridPoint(p.getGridLocation(),getMyObserver(),"yieldZone")){
+			if (t instanceof traffic.relogo.YieldZone)
+			result.add((traffic.relogo.YieldZone)t);
+		}
+		return result;
+	}
+
+	/**
+	 * Returns an agentset of yieldZones on the same patch as a turtle.
+	 * 
+	 * @param t
+	 *            a turtle
+	 * @return agentset of yieldZones on the same patch as turtle t
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.YieldZone")
+	public AgentSet<traffic.relogo.YieldZone> yieldZonesOn(Turtle t){
+		AgentSet<traffic.relogo.YieldZone> result = new AgentSet<traffic.relogo.YieldZone>();						
+		for (Turtle tt : Utility.getTurtlesOnGridPoint(Utility.ndPointToGridPoint(t.getTurtleLocation()),getMyObserver(),"yieldZone")){
+			if (tt instanceof traffic.relogo.YieldZone)
+			result.add((traffic.relogo.YieldZone)tt);
+		}
+		return result;
+	}
+
+	/**
+	 * Returns an agentset of yieldZones on the patches in a collection or on the patches
+	 * that a collection of turtles are.
+	 * 
+	 * @param a
+	 *            a collection
+	 * @return agentset of yieldZones on the patches in collection a or on the patches
+	 *         that collection a turtles are
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.YieldZone")
+	public AgentSet<traffic.relogo.YieldZone> yieldZonesOn(Collection c){
+
+		if (c == null || c.isEmpty()){
+			return new AgentSet<traffic.relogo.YieldZone>();
+		}
+
+		Set<traffic.relogo.YieldZone> total = new HashSet<traffic.relogo.YieldZone>();
+		if (c.iterator().next() instanceof Turtle){
+			for (Object o : c){
+				if (o instanceof Turtle){
+					Turtle t = (Turtle) o;
+					total.addAll(yieldZonesOn(t));
+				}
+			}
+		}
+		else {
+			for (Object o : c){
+				if (o instanceof Patch){
+					Patch p = (Patch) o;
+					total.addAll(yieldZonesOn(p));
+				}
+			}
+		}
+		return new AgentSet<traffic.relogo.YieldZone>(total);
+	}
+
+	/**
+	 * Queries if object is a yieldZone.
+	 * 
+	 * @param o
+	 *            an object
+	 * @return true or false based on whether the object is a yieldZone
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.YieldZone")
+	public boolean isYieldZoneQ(Object o){
+		return (o instanceof traffic.relogo.YieldZone);
+	}
+
+	/**
+	 * Returns the yieldZone with the given who number.
+	 * 
+	 * @param number
+	 *            a number
+	 * @return turtle number
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.YieldZone")
+	public traffic.relogo.YieldZone yieldZone(Number number){
+		Turtle turtle = Utility.turtleU(number.intValue(), getMyObserver());
+		if (turtle instanceof traffic.relogo.YieldZone)
+			return (traffic.relogo.YieldZone) turtle;
+		return null;
+	}
+
+	/**
+	 * Returns an agentset containing all yieldZones.
+	 * 
+	 * @return agentset of all yieldZones
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.YieldZone")
+	public AgentSet<traffic.relogo.YieldZone> yieldZones(){
+		AgentSet<traffic.relogo.YieldZone> a = new AgentSet<traffic.relogo.YieldZone>();
+		for (Object e : this.getMyObserver().getContext().getObjects(traffic.relogo.YieldZone.class)) {
+			if (e instanceof traffic.relogo.YieldZone){
+				a.add((traffic.relogo.YieldZone)e);
+			}
+		}
+		return a;
+	}
+
+	/**
 	 * Queries if object is a userLink.
 	 * 
 	 * @param o
@@ -449,6 +562,27 @@ public class ReLogoLink<T> extends BaseLink<T>	{
 	@ReLogoBuilderGeneratedFor("global: acceleration")
 	public void setAcceleration(Object value){
 		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("acceleration",value);
+	}
+
+	/**
+	 * Returns the value of the global variable deceleration.
+	 *
+	 * @return the value of the global variable deceleration
+	 */
+	@ReLogoBuilderGeneratedFor("global: deceleration")
+	public Object getDeceleration(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("deceleration");
+	}
+
+	/**
+	 * Sets the value of the global variable deceleration.
+	 *
+	 * @param value
+	 *            a value
+	 */
+	@ReLogoBuilderGeneratedFor("global: deceleration")
+	public void setDeceleration(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("deceleration",value);
 	}
 
 	/**
