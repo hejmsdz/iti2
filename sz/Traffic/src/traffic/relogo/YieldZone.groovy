@@ -25,4 +25,8 @@ class YieldZone extends ReLogoTurtle {
 	def anyCarHere() {
 		inRadius(userTurtles(), UserPatch.laneWidth).size() > 0
 	}
+	
+	public def unlockYieldZone() {
+		yieldsTo = []
+	}
 }
