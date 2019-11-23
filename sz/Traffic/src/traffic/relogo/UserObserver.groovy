@@ -60,11 +60,16 @@ class UserObserver extends ReLogoObserver{
 				register()
 			}
 		}
-
-		yieldZones[2].yieldsTo = [yieldZones[1]]
-		yieldZones[1].yieldsTo = [yieldZones[3]]
-		yieldZones[3].yieldsTo = [yieldZones[0]]
-		yieldZones[0].yieldsTo = [yieldZones[2]]
+		
+		if (intersectionType == "p2pIntersection") {
+			yieldZones[2].yieldsTo = [yieldZones[1]]
+			yieldZones[1].yieldsTo = [yieldZones[3]]
+			yieldZones[3].yieldsTo = [yieldZones[0]]
+			yieldZones[0].yieldsTo = [yieldZones[2]]
+		} else if (intersectionType == "priority") {
+			yieldZones[0].yieldsTo = yieldZones[1].yieldsTo = []
+			yieldZones[2].yieldsTo = yieldZones[3].yieldsTo = [yieldZones[0], yieldZones[1]]
+		}
 		
 		
 		ask(patches()) {
