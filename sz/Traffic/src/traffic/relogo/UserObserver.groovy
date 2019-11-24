@@ -19,7 +19,7 @@ class UserObserver extends ReLogoObserver{
 		setDefaultShape(UserTurtle, "car")
 		setDefaultShape(Destination, "house")
 		setDefaultShape(Roundabout, "x")
-		areTrafficLightsGreenHorizontally = true
+		greenHorizontally = true
 		
 		UserTurtle.numCrashes = 0
 		UserTurtle.numAllCars = 0

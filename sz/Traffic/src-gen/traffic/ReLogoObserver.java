@@ -1006,24 +1006,24 @@ public class ReLogoObserver extends BaseObserver{
 	}
 
 	/**
-	 * Returns the value of the global variable areTrafficLightsGreenHorizontally.
+	 * Returns the value of the global variable greenHorizontally.
 	 *
-	 * @return the value of the global variable areTrafficLightsGreenHorizontally
+	 * @return the value of the global variable greenHorizontally
 	 */
-	@ReLogoBuilderGeneratedFor("global: areTrafficLightsGreenHorizontally")
-	public Object getAreTrafficLightsGreenHorizontally(){
-		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("areTrafficLightsGreenHorizontally");
+	@ReLogoBuilderGeneratedFor("global: greenHorizontally")
+	public Object getGreenHorizontally(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("greenHorizontally");
 	}
 
 	/**
-	 * Sets the value of the global variable areTrafficLightsGreenHorizontally.
+	 * Sets the value of the global variable greenHorizontally.
 	 *
 	 * @param value
 	 *            a value
 	 */
-	@ReLogoBuilderGeneratedFor("global: areTrafficLightsGreenHorizontally")
-	public void setAreTrafficLightsGreenHorizontally(Object value){
-		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("areTrafficLightsGreenHorizontally",value);
+	@ReLogoBuilderGeneratedFor("global: greenHorizontally")
+	public void setGreenHorizontally(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("greenHorizontally",value);
 	}
 
 	/**
