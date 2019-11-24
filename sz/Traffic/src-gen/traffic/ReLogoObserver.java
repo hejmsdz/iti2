@@ -389,6 +389,193 @@ public class ReLogoObserver extends BaseObserver{
 	}
 
 	/**
+	 * Makes a number of randomly oriented roundabouts and then executes a set of commands on the
+	 * created roundabouts.
+	 * 
+	 * @param number
+	 *            a number
+	 * @param closure
+	 *            a set of commands
+	 * @return created roundabouts
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Roundabout")
+	public AgentSet<traffic.relogo.Roundabout> createRoundabouts(int number, Closure closure) {
+		AgentSet<traffic.relogo.Roundabout> result = new AgentSet<>();
+		AgentSet<Turtle> createResult = this.crt(number,closure,"Roundabout");
+		for (Turtle t : createResult){
+			if (t instanceof traffic.relogo.Roundabout){
+				result.add((traffic.relogo.Roundabout)t);
+			}
+		} 
+		return result; 
+	}
+
+	/**
+	 * Makes a number of randomly oriented roundabouts and then executes a set of commands on the
+	 * created roundabouts.
+	 * 
+	 * @param number
+	 *            a number
+	 * @param closure
+	 *            a set of commands
+	 * @return created roundabouts
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Roundabout")
+	public AgentSet<traffic.relogo.Roundabout> createRoundabouts(int number) {
+		return createRoundabouts(number,null);
+	}
+
+	/**
+	 * Makes a number of uniformly fanned roundabouts and then executes a set of commands on the
+	 * created roundabouts.
+	 * 
+	 * @param number
+	 *            a number
+	 * @param closure
+	 *            a set of commands
+	 * @return created roundabouts
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Roundabout")
+	public AgentSet<traffic.relogo.Roundabout> createOrderedRoundabouts(int number, Closure closure) {
+		AgentSet<traffic.relogo.Roundabout> result = new AgentSet<>();
+		AgentSet<Turtle> createResult = this.cro(number,closure,"Roundabout");
+		for (Turtle t : createResult){
+			if (t instanceof traffic.relogo.Roundabout){
+				result.add((traffic.relogo.Roundabout)t);
+			}
+		} 
+		return result; 
+	}
+
+	/**
+	 * Makes a number of uniformly fanned roundabouts and then executes a set of commands on the
+	 * created roundabouts.
+	 * 
+	 * @param number
+	 *            a number
+	 * @param closure
+	 *            a set of commands
+	 * @return created roundabouts
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Roundabout")
+	public AgentSet<traffic.relogo.Roundabout> createOrderedRoundabouts(int number) {
+		return createOrderedRoundabouts(number,null);
+	}
+
+	/**
+	 * Queries if object is a roundabout.
+	 * 
+	 * @param o
+	 *            an object
+	 * @return true or false based on whether the object is a roundabout
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Roundabout")
+	public boolean isRoundaboutQ(Object o){
+		return (o instanceof traffic.relogo.Roundabout);
+	}
+
+	/**
+	 * Returns an agentset containing all roundabouts.
+	 * 
+	 * @return agentset of all roundabouts
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Roundabout")
+	public AgentSet<traffic.relogo.Roundabout> roundabouts(){
+		AgentSet<traffic.relogo.Roundabout> a = new AgentSet<traffic.relogo.Roundabout>();
+		for (Object e : this.getContext().getObjects(traffic.relogo.Roundabout.class)) {
+			if (e instanceof traffic.relogo.Roundabout){
+				a.add((traffic.relogo.Roundabout)e);
+			}
+		}
+		return a;
+	}
+
+	/**
+	 * Returns the roundabout with the given who number.
+	 * 
+	 * @param number
+	 *            a number
+	 * @return turtle number
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Roundabout")
+	public traffic.relogo.Roundabout roundabout(Number number){
+		Turtle turtle = Utility.turtleU(number.intValue(), this);
+		if (turtle instanceof traffic.relogo.Roundabout)
+			return (traffic.relogo.Roundabout) turtle;
+		return null;
+	}
+
+	/**
+	 * Returns an agentset of roundabouts on a given patch.
+	 * 
+	 * @param p
+	 *            a patch
+	 * @return agentset of roundabouts on patch p
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Roundabout")
+	public AgentSet<traffic.relogo.Roundabout> roundaboutsOn(Patch p){
+		AgentSet<traffic.relogo.Roundabout> result = new AgentSet<traffic.relogo.Roundabout>();						
+		for (Turtle t : Utility.getTurtlesOnGridPoint(p.getGridLocation(),this,"roundabout")){
+			if (t instanceof traffic.relogo.Roundabout)
+			result.add((traffic.relogo.Roundabout)t);
+		}
+		return result;
+	}
+
+	/**
+	 * Returns an agentset of roundabouts on the same patch as a turtle.
+	 * 
+	 * @param t
+	 *            a turtle
+	 * @return agentset of roundabouts on the same patch as turtle t
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Roundabout")
+	public AgentSet<traffic.relogo.Roundabout> roundaboutsOn(Turtle t){
+		AgentSet<traffic.relogo.Roundabout> result = new AgentSet<traffic.relogo.Roundabout>();						
+		for (Turtle tt : Utility.getTurtlesOnGridPoint(Utility.ndPointToGridPoint(t.getTurtleLocation()),this,"roundabout")){
+			if (tt instanceof traffic.relogo.Roundabout)
+			result.add((traffic.relogo.Roundabout)tt);
+		}
+		return result;
+	}
+
+	/**
+	 * Returns an agentset of roundabouts on the patches in a collection or on the patches
+	 * that a collection of turtles are.
+	 * 
+	 * @param a
+	 *            a collection
+	 * @return agentset of roundabouts on the patches in collection a or on the patches
+	 *         that collection a turtles are
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Roundabout")
+	public AgentSet<traffic.relogo.Roundabout> roundaboutsOn(Collection c){
+
+		if (c == null || c.isEmpty()){
+			return new AgentSet<traffic.relogo.Roundabout>();
+		}
+
+		Set<traffic.relogo.Roundabout> total = new HashSet<traffic.relogo.Roundabout>();
+		if (c.iterator().next() instanceof Turtle){
+			for (Object o : c){
+				if (o instanceof Turtle){
+					Turtle t = (Turtle) o;
+					total.addAll(roundaboutsOn(t));
+				}
+			}
+		}
+		else {
+			for (Object o : c){
+				if (o instanceof Patch){
+					Patch p = (Patch) o;
+					total.addAll(roundaboutsOn(p));
+				}
+			}
+		}
+		return new AgentSet<traffic.relogo.Roundabout>(total);
+	}
+
+	/**
 	 * Makes a number of randomly oriented userTurtles and then executes a set of commands on the
 	 * created userTurtles.
 	 * 
@@ -819,6 +1006,27 @@ public class ReLogoObserver extends BaseObserver{
 	}
 
 	/**
+	 * Returns the value of the global variable areTrafficLightsGreenHorizontally.
+	 *
+	 * @return the value of the global variable areTrafficLightsGreenHorizontally
+	 */
+	@ReLogoBuilderGeneratedFor("global: areTrafficLightsGreenHorizontally")
+	public Object getAreTrafficLightsGreenHorizontally(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("areTrafficLightsGreenHorizontally");
+	}
+
+	/**
+	 * Sets the value of the global variable areTrafficLightsGreenHorizontally.
+	 *
+	 * @param value
+	 *            a value
+	 */
+	@ReLogoBuilderGeneratedFor("global: areTrafficLightsGreenHorizontally")
+	public void setAreTrafficLightsGreenHorizontally(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("areTrafficLightsGreenHorizontally",value);
+	}
+
+	/**
 	 * Returns the value of the global variable intersectionType.
 	 *
 	 * @return the value of the global variable intersectionType
@@ -921,6 +1129,27 @@ public class ReLogoObserver extends BaseObserver{
 	@ReLogoBuilderGeneratedFor("global: poissonStreamRate")
 	public void setPoissonStreamRate(Object value){
 		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("poissonStreamRate",value);
+	}
+
+	/**
+	 * Returns the value of the global variable turningThreshold.
+	 *
+	 * @return the value of the global variable turningThreshold
+	 */
+	@ReLogoBuilderGeneratedFor("global: turningThreshold")
+	public Object getTurningThreshold(){
+		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("turningThreshold");
+	}
+
+	/**
+	 * Sets the value of the global variable turningThreshold.
+	 *
+	 * @param value
+	 *            a value
+	 */
+	@ReLogoBuilderGeneratedFor("global: turningThreshold")
+	public void setTurningThreshold(Object value){
+		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("turningThreshold",value);
 	}
 
 
