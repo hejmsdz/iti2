@@ -12,6 +12,7 @@ import traffic.ReLogoPatch;
 
 class UserPatch extends ReLogoPatch {
 	static laneWidth = 3
+	enum LightState { HORIZONTAL, VERTICAL, INTERMEDIATE };
 
 	def setColor() {
 		def x = getPxcor()
@@ -46,19 +47,30 @@ class UserPatch extends ReLogoPatch {
 		}
 	}
 	
-	def changeLights(boolean greenHorizontally ) {
+	def changeLights(LightState state) {
 		def x = getPxcor()
 		def y = getPycor()
 		def pos = laneWidth + 1
 		
+		double horizontal
+		double vertical
+		
+		if (state == LightState.INTERMEDIATE) {
+			horizontal = orange()
+			vertical = orange()
+		} else {
+			horizontal = state == LightState.HORIZONTAL ? lime() : red()
+			vertical = state == LightState.VERTICAL ? lime() : red()
+		}
+		
 		if (x == pos && y > 0 && y <= laneWidth) { // Right
-			greenHorizontally ? setPcolor(lime()) : setPcolor(red())
+			setPcolor(horizontal)
 		} else if (y < 0 && y >= -laneWidth && x == -pos) { // Left
-			greenHorizontally ? setPcolor(lime()) : setPcolor(red())
+			setPcolor(horizontal)
 		} else if (x < 0 && x >= -laneWidth && y == pos) { // Top
-			greenHorizontally ? setPcolor(red()) : setPcolor(lime())
+			setPcolor(vertical)
 		} else if (x > 0 && x <= laneWidth && y == -pos) { // Down
-			greenHorizontally ? setPcolor(red()) : setPcolor(lime())
+			setPcolor(vertical)
 		}
 	}
 

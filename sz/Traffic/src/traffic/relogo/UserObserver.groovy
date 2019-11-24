@@ -12,6 +12,7 @@ import traffic.ReLogoObserver;
 class UserObserver extends ReLogoObserver{
 	def yieldZones = []
 	def streams = []
+	def lightState = null
 	
 	@Setup
 	def setup(){
@@ -65,6 +66,10 @@ class UserObserver extends ReLogoObserver{
 			}
 		}
 		
+		ask(patches()) {
+			setColor()
+		}
+		
 		if (intersectionType == "p2pIntersection") {
 			yieldZones[2].yieldsTo = [yieldZones[1]]
 			yieldZones[1].yieldsTo = [yieldZones[3]]
@@ -81,10 +86,6 @@ class UserObserver extends ReLogoObserver{
 				register()
 			}
 		}
-		
-		ask(patches()) {
-			setColor()
-		}
 
 		resetTimer()
 	}
@@ -97,21 +98,28 @@ class UserObserver extends ReLogoObserver{
 		}
 		
 		if (intersectionType == "trafficLights") {
-			def second = Calendar.getInstance().get(Calendar.SECOND) % 20
-			
-			if (second % 20 == 0) {
+			def newLightState = currentLightState()
+			if (newLightState != lightState) {
 				ask(patches()) {
-					changeLights(true)
+					changeLights(newLightState)
 				}
-			} else if (second == 10) {
-				ask(patches()) {
-					changeLights(false)
-				}
+				lightState = newLightState
 			}
 		}
 		
 		checkDeadlock()
 		resetTimer()
+	}
+	
+	def currentLightState() {
+		def second = Calendar.getInstance().get(Calendar.SECOND) % 20
+		if (second < 9) {
+			UserPatch.LightState.HORIZONTAL
+		} else if (second >= 8 && second < 10 || second >= 18) {
+			UserPatch.LightState.INTERMEDIATE
+		} else {
+			UserPatch.LightState.VERTICAL
+		}
 	}
 	
 	def checkDeadlock() {
