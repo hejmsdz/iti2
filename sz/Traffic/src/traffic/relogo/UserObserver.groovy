@@ -97,11 +97,13 @@ class UserObserver extends ReLogoObserver{
 		}
 		
 		if (intersectionType == "trafficLights") {
-			if (Calendar.getInstance().get(Calendar.SECOND) % 20 == 0) {
+			def second = Calendar.getInstance().get(Calendar.SECOND) % 20
+			
+			if (second % 20 == 0) {
 				ask(patches()) {
 					changeLights(true)
 				}
-			} else if (Calendar.getInstance().get(Calendar.SECOND) % 10 == 0) {
+			} else if (second == 10) {
 				ask(patches()) {
 					changeLights(false)
 				}
