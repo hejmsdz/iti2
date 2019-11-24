@@ -19,7 +19,7 @@ class UserObserver extends ReLogoObserver{
 		setDefaultShape(UserTurtle, "car")
 		setDefaultShape(Destination, "house")
 		setDefaultShape(Roundabout, "x")
-		areTrafficLightsGreenHorizontally = true
+		greenHorizontally = true
 		
 		UserTurtle.numCrashes = 0
 		UserTurtle.numAllCars = 0
@@ -119,7 +119,8 @@ class UserObserver extends ReLogoObserver{
 
 		if (isDeadlocked) {
 			println("Deadlock occurred!")
-			pause() 
+			yieldZones().get(0).unlockYieldZone()
+//			pause() 
 		}
 	}
 	
