@@ -10,6 +10,9 @@ import repast.simphony.relogo.schedule.Setup;
 import traffic.ReLogoObserver;
 
 class UserObserver extends ReLogoObserver{
+	def yieldZones = []
+	def streams = []
+	
 	@Setup
 	def setup(){
 		clearAll()
@@ -17,8 +20,16 @@ class UserObserver extends ReLogoObserver{
 		setDefaultShape(Destination, "house")
 		areTrafficLightsGreenHorizontally = true
 		
+		UserTurtle.numCrashes = 0
+		UserTurtle.numAllCars = 0
+		ask(destinations()) {
+			totalTravelTime = 0
+			numCarsArrived = 0
+		}
+		
 		def width = (UserPatch.laneWidth + 1) / 2
 		def d = 15
+		yieldZones = []
 
 		[[-1, 0, red()], [1, 0, green()], [0, -1, blue()], [0, 1, yellow()]].eachWithIndex { pos, index ->
 
@@ -32,6 +43,15 @@ class UserObserver extends ReLogoObserver{
 				facexy(xOffset, yOffset)
 				destinations = [0,1,2,3] - index
 				setColor(white())
+				streams.add(it)
+			}
+			
+			createYieldZones(1) {
+				setxy(UserPatch.laneWidth * 1.7 * x + xOffset, UserPatch.laneWidth * 1.7 * y + yOffset)
+				setSize(1)
+				setColor(black())
+				facexy(xOffset, yOffset)
+				yieldZones.add(it)
 			}
 			
 			createDestinations(1) {
@@ -41,6 +61,17 @@ class UserObserver extends ReLogoObserver{
 				register()
 			}
 		}
+		
+		if (intersectionType == "p2pIntersection") {
+			yieldZones[2].yieldsTo = [yieldZones[1]]
+			yieldZones[1].yieldsTo = [yieldZones[3]]
+			yieldZones[3].yieldsTo = [yieldZones[0]]
+			yieldZones[0].yieldsTo = [yieldZones[2]]
+		} else if (intersectionType == "priority") {
+			yieldZones[0].yieldsTo = yieldZones[1].yieldsTo = []
+			yieldZones[2].yieldsTo = yieldZones[3].yieldsTo = [yieldZones[0], yieldZones[1]]
+		}
+		
 		
 		ask(patches()) {
 			setColor()
@@ -67,7 +98,17 @@ class UserObserver extends ReLogoObserver{
 			}
 		}
 		
+		checkDeadlock()
 		resetTimer()
+	}
+	
+	def checkDeadlock() {
+		def isDeadlocked = userTurtles().size() > 0 && userTurtles().every { it.speed == 0 && it.state != UserTurtle.State.ACCELERATING } 
+
+		if (isDeadlocked) {
+			println("Deadlock occurred!")
+			pause() 
+		}
 	}
 	
 	def carsOnTheRoad() {
@@ -88,7 +129,7 @@ class UserObserver extends ReLogoObserver{
 	def meanTravelTime() {
 		def sum = 0
 		def count = 0
-		ask(destinations()) {
+		ask(poissonStreams()) {
 			sum += totalTravelTime
 			count += numCarsArrived
 		}
@@ -97,18 +138,18 @@ class UserObserver extends ReLogoObserver{
 	}
 	
 	def meanTravelTimeN() {
-		Destination.instances[3].meanTravelTime()
+		streams[3].meanTravelTime()
 	}
 	
 	def meanTravelTimeS() {
-		Destination.instances[2].meanTravelTime()
+		streams[2].meanTravelTime()
 	}
 	
 	def meanTravelTimeW() {
-		Destination.instances[0].meanTravelTime()
+		streams[0].meanTravelTime()
 	}
 	
 	def meanTravelTimeE() {
-		Destination.instances[1].meanTravelTime()
+		streams[1].meanTravelTime()
 	}
 }

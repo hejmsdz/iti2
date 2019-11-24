@@ -11,13 +11,13 @@ import repast.simphony.relogo.schedule.Setup;
 import traffic.ReLogoTurtle;
 
 class UserTurtle extends ReLogoTurtle{
-	enum State { ACCELERATING, BRAKING, DRIVING }
+	enum State { ACCELERATING, BRAKING }
 	
-	long createdAt
-	def speed = 0
+	public long createdAt
+	def speed = 0.0
 	def state = State.ACCELERATING
 	Destination destination = null
-	def isPrioritySet = false
+	PoissonStream source = null
 	def shouldDestroy = false
 	
 	def static numAllCars = 0
@@ -29,29 +29,45 @@ class UserTurtle extends ReLogoTurtle{
 		numAllCars++
 		createdAt = System.currentTimeMillis()
 	}
-
+	
+	def brake() {
+		state = State.BRAKING
+	}
+	
+	def accelerate() {
+		state = State.ACCELERATING
+	}
+	
+	
 	def step(double dt) {
-		setLabel()
-		
-		// Stop for cars ahead
-		def carsAhead = inCone(userTurtles(), 4, 70).size()
-		if (carsAhead >= 1) {
-			state = State.BRAKING
-			setLabel(carsAhead + " car!")
-		} else {
-			state = State.ACCELERATING
+		giveWay()
+		move(dt)
+		turnToDestination()
+		detectCollisions()
+		dieIfDestroyed()
+	}
+	
+	def hasCarsAhead() {
+		def cars = userTurtles()
+		cars.remove(this)
+		return inCone(cars, 4, 70).size() >= 1
+	}
+	
+	def isRedLightAhead() {
+		(0..5).any { patchAhead(it).pcolor == red() }
+	}
+	
+	def giveWay() {
+		if (shouldYield() || hasCarsAhead() || isRedLightAhead()) {
+			brake()
+		} else if (state == State.BRAKING) {
+			accelerate()
 		}
-
-		// Stop for red light
-		def isRedLightAhead = (0..5).each {
-			if (patchAhead(it).pcolor == red()) {
-				state = State.BRAKING
-				setLabel("Green?")
-			} 
-		}
-		
-		// Accelerate or decelerate
-		if (speed < maxSpeed && state == State.ACCELERATING) {
+	}
+	
+	def move(double dt) {
+		def preSpeed = speed
+		if (state == State.ACCELERATING) {
 			speed += acceleration * dt
 		} else if (speed >= 0 && state == State.BRAKING) {
 			speed -= deceleration * dt
@@ -59,25 +75,18 @@ class UserTurtle extends ReLogoTurtle{
 
 		// Handle max speed
 		speed = Math.max(Math.min(speed, maxSpeed), 0)
+		forward(speed * dt)
+	}
+	
+	def turnToDestination() {
+		def threshold = 0.8
 		
-		if (state == State.ACCELERATING && speed >= maxSpeed) {
-			state = State.DRIVING
-		}
-
-		// Turning
-		if ((Math.abs(getXcor() - destination.getXcor()) < turningThreshold) ^
-				(Math.abs(getYcor() - destination.getYcor()) < turningThreshold)) {
+		if ((Math.abs(getXcor() - destination.getXcor()) < threshold) ^ (Math.abs(getYcor() - destination.getYcor()) < threshold)) {
 			face(destination)
 		}
-
-		// Collision detection
-		if (shouldDestroy) {
-			die()
-			return
-		}
-		
-		forward(speed * dt)
-		
+	}
+	
+	def detectCollisions() {
 		def collisions = userTurtlesHere()
 		if (collisions.size() > 1) {
 			ask(collisions) {
@@ -87,10 +96,21 @@ class UserTurtle extends ReLogoTurtle{
 			}
 			return
 		}
+	}
+	
+	def dieIfDestroyed() {
+		if (shouldDestroy) {
+			die()
+			return
+		}
 		
 		if (patchHere().getPcolor() == green()) {
 			die()
 		}
+	}
+	
+	def shouldYield() {
+		return yieldZonesHere().any { !it.hasRightOfWay() }
 	}
 	
 	def setDestination(Destination value) {
