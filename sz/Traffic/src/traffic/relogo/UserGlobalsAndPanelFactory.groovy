@@ -36,7 +36,7 @@ public class UserGlobalsAndPanelFactory extends AbstractReLogoGlobalsAndPanelFac
 
 
 		addGlobal("maxSpeed")
-		addSliderWL("maxSpeed", "Car maximum speed", 1, 1, 100, 5)
+		addSliderWL("maxSpeed", "Car maximum speed", 1, 1, 100, 10)
 
 		addGlobal("poissonStreamRate")
 		addSliderWL("poissonStreamRate", "Car spawn rate", 0.1, 0.1, 2.0, 1.3)
