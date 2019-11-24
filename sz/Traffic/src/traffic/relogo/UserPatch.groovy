@@ -19,8 +19,6 @@ class UserPatch extends ReLogoPatch {
 
 		if (intersectionType == "p2pIntersection" || intersectionType == "priority") {
 			colorIntersection(x, y)
-		} else if (intersectionType == "priority") {
-			colorPriority(x, y)
 		} else if (intersectionType == "trafficLights") {
 			colorTrafficLights(x, y)
 		} else if (intersectionType == "roundabout") {
@@ -36,10 +34,6 @@ class UserPatch extends ReLogoPatch {
 		} else {
 			setPcolor(gray() - 3)
 		}
-	}
-
-	def colorPriority(int x, int y) {
-		setPcolor(green())
 	}
 
 	def colorTrafficLights(int x, int y) {
@@ -69,7 +63,19 @@ class UserPatch extends ReLogoPatch {
 	}
 
 	def colorRoundabout(int x, int y) {
-		setPcolor(green())
+		if (Math.abs(x) > laneWidth && Math.abs(y) > laneWidth && distanceFromCenter(x, y) > 8) {
+			setPcolor(green()-1)
+		} else if ((x == 0 || y == 0) && (x + y).intdiv(2) % 2 == 0 && distanceFromCenter(x, y) > 5) {
+			setPcolor(white())
+		} else if (distanceFromCenter(x, y) < 3.5d) {
+			setPcolor(green())
+		} else {
+			setPcolor(gray() - 3)
+		} 
+	}
+	
+	private def distanceFromCenter(int x, int y) {
+		return Math.sqrt(x*x + y*y)
 	}
 
 }

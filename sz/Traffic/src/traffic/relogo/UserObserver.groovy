@@ -18,6 +18,7 @@ class UserObserver extends ReLogoObserver{
 		clearAll()
 		setDefaultShape(UserTurtle, "car")
 		setDefaultShape(Destination, "house")
+		setDefaultShape(Roundabout, "x")
 		areTrafficLightsGreenHorizontally = true
 		
 		UserTurtle.numCrashes = 0
@@ -51,6 +52,7 @@ class UserObserver extends ReLogoObserver{
 				setSize(1)
 				setColor(black())
 				facexy(xOffset, yOffset)
+				setLabel(index)
 				yieldZones.add(it)
 			}
 			
@@ -58,6 +60,7 @@ class UserObserver extends ReLogoObserver{
 				setxy(d * x - xOffset, d * y - yOffset)
 				facexy(xOffset, yOffset)
 				setColor(color)
+				setLabel(index)
 				register()
 			}
 		}
@@ -70,12 +73,17 @@ class UserObserver extends ReLogoObserver{
 		} else if (intersectionType == "priority") {
 			yieldZones[0].yieldsTo = yieldZones[1].yieldsTo = []
 			yieldZones[2].yieldsTo = yieldZones[3].yieldsTo = [yieldZones[0], yieldZones[1]]
+		} else if (intersectionType == "roundabout") {
+			createRoundabouts(1) {
+				setxy(0, 0)
+				setSize(3)
+				setColor(blue())
+				register()
+			}
 		}
-		
 		
 		ask(patches()) {
 			setColor()
-			changeLights(true)
 		}
 
 		resetTimer()
@@ -88,13 +96,15 @@ class UserObserver extends ReLogoObserver{
 			step(dt)
 		}
 		
-		if (Calendar.getInstance().get(Calendar.SECOND) % 20 == 0) {
-			ask(patches()) {
-				changeLights(true)
-			}
-		} else if (Calendar.getInstance().get(Calendar.SECOND) % 10 == 0) {
-			ask(patches()) {
-				changeLights(false)
+		if (intersectionType == "trafficLights") {
+			if (Calendar.getInstance().get(Calendar.SECOND) % 20 == 0) {
+				ask(patches()) {
+					changeLights(true)
+				}
+			} else if (Calendar.getInstance().get(Calendar.SECOND) % 10 == 0) {
+				ask(patches()) {
+					changeLights(false)
+				}
 			}
 		}
 		

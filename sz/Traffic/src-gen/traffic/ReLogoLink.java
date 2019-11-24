@@ -241,6 +241,119 @@ public class ReLogoLink<T> extends BaseLink<T>	{
 	}
 
 	/**
+	 * Returns an agentset of roundabouts on a given patch.
+	 * 
+	 * @param p
+	 *            a patch
+	 * @return agentset of roundabouts on patch p
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Roundabout")
+	public AgentSet<traffic.relogo.Roundabout> roundaboutsOn(Patch p){
+		AgentSet<traffic.relogo.Roundabout> result = new AgentSet<traffic.relogo.Roundabout>();						
+		for (Turtle t : Utility.getTurtlesOnGridPoint(p.getGridLocation(),getMyObserver(),"roundabout")){
+			if (t instanceof traffic.relogo.Roundabout)
+			result.add((traffic.relogo.Roundabout)t);
+		}
+		return result;
+	}
+
+	/**
+	 * Returns an agentset of roundabouts on the same patch as a turtle.
+	 * 
+	 * @param t
+	 *            a turtle
+	 * @return agentset of roundabouts on the same patch as turtle t
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Roundabout")
+	public AgentSet<traffic.relogo.Roundabout> roundaboutsOn(Turtle t){
+		AgentSet<traffic.relogo.Roundabout> result = new AgentSet<traffic.relogo.Roundabout>();						
+		for (Turtle tt : Utility.getTurtlesOnGridPoint(Utility.ndPointToGridPoint(t.getTurtleLocation()),getMyObserver(),"roundabout")){
+			if (tt instanceof traffic.relogo.Roundabout)
+			result.add((traffic.relogo.Roundabout)tt);
+		}
+		return result;
+	}
+
+	/**
+	 * Returns an agentset of roundabouts on the patches in a collection or on the patches
+	 * that a collection of turtles are.
+	 * 
+	 * @param a
+	 *            a collection
+	 * @return agentset of roundabouts on the patches in collection a or on the patches
+	 *         that collection a turtles are
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Roundabout")
+	public AgentSet<traffic.relogo.Roundabout> roundaboutsOn(Collection c){
+
+		if (c == null || c.isEmpty()){
+			return new AgentSet<traffic.relogo.Roundabout>();
+		}
+
+		Set<traffic.relogo.Roundabout> total = new HashSet<traffic.relogo.Roundabout>();
+		if (c.iterator().next() instanceof Turtle){
+			for (Object o : c){
+				if (o instanceof Turtle){
+					Turtle t = (Turtle) o;
+					total.addAll(roundaboutsOn(t));
+				}
+			}
+		}
+		else {
+			for (Object o : c){
+				if (o instanceof Patch){
+					Patch p = (Patch) o;
+					total.addAll(roundaboutsOn(p));
+				}
+			}
+		}
+		return new AgentSet<traffic.relogo.Roundabout>(total);
+	}
+
+	/**
+	 * Queries if object is a roundabout.
+	 * 
+	 * @param o
+	 *            an object
+	 * @return true or false based on whether the object is a roundabout
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Roundabout")
+	public boolean isRoundaboutQ(Object o){
+		return (o instanceof traffic.relogo.Roundabout);
+	}
+
+	/**
+	 * Returns the roundabout with the given who number.
+	 * 
+	 * @param number
+	 *            a number
+	 * @return turtle number
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Roundabout")
+	public traffic.relogo.Roundabout roundabout(Number number){
+		Turtle turtle = Utility.turtleU(number.intValue(), getMyObserver());
+		if (turtle instanceof traffic.relogo.Roundabout)
+			return (traffic.relogo.Roundabout) turtle;
+		return null;
+	}
+
+	/**
+	 * Returns an agentset containing all roundabouts.
+	 * 
+	 * @return agentset of all roundabouts
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.Roundabout")
+	public AgentSet<traffic.relogo.Roundabout> roundabouts(){
+		AgentSet<traffic.relogo.Roundabout> a = new AgentSet<traffic.relogo.Roundabout>();
+		for (Object e : this.getMyObserver().getContext().getObjects(traffic.relogo.Roundabout.class)) {
+			if (e instanceof traffic.relogo.Roundabout){
+				a.add((traffic.relogo.Roundabout)e);
+			}
+		}
+		return a;
+	}
+
+	/**
 	 * Returns an agentset of userTurtles on a given patch.
 	 * 
 	 * @param p
