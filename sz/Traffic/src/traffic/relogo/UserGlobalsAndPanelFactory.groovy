@@ -47,6 +47,7 @@ public class UserGlobalsAndPanelFactory extends AbstractReLogoGlobalsAndPanelFac
 		addMonitorWL("carsOnTheRoad", "Cars on the road now", 5)
 		addMonitorWL("numAllCars", "All cars (now and past)", 5)
 		addMonitorWL("crashRate", "Crash rate", 5)
+		addMonitorWL("getDeadlockCount", "Deadlock occurences", 5)
 		addMonitorWL("meanTravelTime", "Mean travel time (overall)", 5)
 		addMonitorWL("meanTravelTimeN", "Mean travel time (north destination)", 5)
 		addMonitorWL("meanTravelTimeS", "Mean travel time (south destination)", 5)
