@@ -13,6 +13,7 @@ class UserObserver extends ReLogoObserver{
 	def yieldZones = []
 	def streams = []
 	def lightState = null
+	def deadlockCount = 0
 	
 	@Setup
 	def setup(){
@@ -21,6 +22,8 @@ class UserObserver extends ReLogoObserver{
 		setDefaultShape(Destination, "house")
 		setDefaultShape(Roundabout, "x")
 		greenHorizontally = true
+		
+		deadlockCount = 0
 		
 		UserTurtle.numCrashes = 0
 		UserTurtle.numAllCars = 0
@@ -137,9 +140,12 @@ class UserObserver extends ReLogoObserver{
 		def isDeadlocked = userTurtles().size() > 0 && userTurtles().every { it.speed == 0 && it.state != UserTurtle.State.ACCELERATING } 
 
 		if (isDeadlocked) {
-			println("Deadlock occurred!")
-			yieldZones().get(0).unlockYieldZone()
-//			pause() 
+			deadlockCount++
+			ask(userTurtles()) { car ->
+				if (getXcor() + getYcor() <= UserPatch.laneWidth) {
+					enableMadnessPriority()
+				}
+			}
 		}
 	}
 	
