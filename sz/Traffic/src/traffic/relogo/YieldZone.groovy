@@ -16,6 +16,12 @@ class YieldZone extends ReLogoTurtle {
 
 	def step(double dt) {
 		setColor(hasRightOfWay() ? sky() : red())
+		
+		if (intersectionType == "roundabout") {
+			ask(userTurtlesHere()) { car ->
+				car.enableMadnessPriority()
+			}
+		}
 	}
 	
 	def hasRightOfWay() {
