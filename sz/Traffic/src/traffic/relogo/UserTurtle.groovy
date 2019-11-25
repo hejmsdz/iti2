@@ -67,7 +67,10 @@ class UserTurtle extends ReLogoTurtle{
 	}
 	
 	def isRedLightAhead() {
-		(0..5).any { patchAhead(it).pcolor == red() }
+		(0..2).any {
+			def color = patchAhead(it).pcolor
+			color == red() || color == orange()
+		}
 	}
 	
 	def giveWay() {
