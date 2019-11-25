@@ -22,9 +22,11 @@ public class UserGlobalsAndPanelFactory extends AbstractReLogoGlobalsAndPanelFac
 	        // State change button with label (method name in observer, label)
 	        addStateChangeButtonWL("changeSomething","Change Something")
 		 */
+		
+		addGlobal("greenHorizontally")
 
 		addGlobal("intersectionType")
-		addChooserWL("intersectionType", "Intersection type", ["p2pIntersection", "priority", "trafficLights", "roundabout"], 0)
+		addChooserWL("intersectionType", "Intersection type", ["p2pIntersection", "priority", "trafficLights", "roundabout"], 3)
 
 		addGlobal("acceleration")
 		addSliderWL("acceleration", "Car acceleration", 1, 1, 100, 10)
@@ -32,20 +34,24 @@ public class UserGlobalsAndPanelFactory extends AbstractReLogoGlobalsAndPanelFac
 		addGlobal("deceleration")
 		addSliderWL("deceleration", "Car brake deceleration", 1, 1, 100, 75)
 
+
 		addGlobal("maxSpeed")
 		addSliderWL("maxSpeed", "Car maximum speed", 1, 1, 100, 10)
 
 		addGlobal("poissonStreamRate")
-		addSliderWL("poissonStreamRate", "Car spawn rate", 0.1, 0.1, 1.0, 0.2)
+		addSliderWL("poissonStreamRate", "Car spawn rate", 0.1, 0.1, 2.0, 1.3)
+
+		addGlobal("turningThreshold")
+		addSliderWL("turningThreshold", "Turning threshold", 0.0, 0.1, 10.0, 0.2)
+
 		
 		addMonitorWL("carsOnTheRoad", "Cars on the road now", 5)
 		addMonitorWL("numAllCars", "All cars (now and past)", 5)
 		addMonitorWL("crashRate", "Crash rate", 5)
 		addMonitorWL("meanTravelTime", "Mean travel time (overall)", 5)
-		addMonitorWL("meanTravelTimeN", "Mean travel time (north source)", 5)
-		addMonitorWL("meanTravelTimeS", "Mean travel time (south source)", 5)
-		addMonitorWL("meanTravelTimeW", "Mean travel time (west source)", 5)
-		addMonitorWL("meanTravelTimeE", "Mean travel time (east source)", 5)
-
+		addMonitorWL("meanTravelTimeN", "Mean travel time (north destination)", 5)
+		addMonitorWL("meanTravelTimeS", "Mean travel time (south destination)", 5)
+		addMonitorWL("meanTravelTimeW", "Mean travel time (west destination)", 5)
+		addMonitorWL("meanTravelTimeE", "Mean travel time (east destination)", 5)
 	}
 }

@@ -12,12 +12,15 @@ import traffic.ReLogoObserver;
 class UserObserver extends ReLogoObserver{
 	def yieldZones = []
 	def streams = []
+	def lightState = null
 	
 	@Setup
 	def setup(){
 		clearAll()
 		setDefaultShape(UserTurtle, "car")
 		setDefaultShape(Destination, "house")
+		setDefaultShape(Roundabout, "x")
+		greenHorizontally = true
 		
 		UserTurtle.numCrashes = 0
 		UserTurtle.numAllCars = 0
@@ -50,6 +53,7 @@ class UserObserver extends ReLogoObserver{
 				setSize(1)
 				setColor(black())
 				facexy(xOffset, yOffset)
+				setLabel(index)
 				yieldZones.add(it)
 			}
 			
@@ -57,8 +61,13 @@ class UserObserver extends ReLogoObserver{
 				setxy(d * x - xOffset, d * y - yOffset)
 				facexy(xOffset, yOffset)
 				setColor(color)
+				setLabel(index)
 				register()
 			}
+		}
+		
+		ask(patches()) {
+			setColor()
 		}
 		
 		if (intersectionType == "p2pIntersection") {
@@ -69,11 +78,13 @@ class UserObserver extends ReLogoObserver{
 		} else if (intersectionType == "priority") {
 			yieldZones[0].yieldsTo = yieldZones[1].yieldsTo = []
 			yieldZones[2].yieldsTo = yieldZones[3].yieldsTo = [yieldZones[0], yieldZones[1]]
-		}
-		
-		
-		ask(patches()) {
-			setColor()
+		} else if (intersectionType == "roundabout") {
+			createRoundabouts(1) {
+				setxy(0, 0)
+				setSize(3)
+				setColor(blue())
+				register()
+			}
 		}
 
 		resetTimer()
@@ -85,8 +96,30 @@ class UserObserver extends ReLogoObserver{
 		ask(turtles()){
 			step(dt)
 		}
+		
+		if (intersectionType == "trafficLights") {
+			def newLightState = currentLightState()
+			if (newLightState != lightState) {
+				ask(patches()) {
+					changeLights(newLightState)
+				}
+				lightState = newLightState
+			}
+		}
+		
 		checkDeadlock()
 		resetTimer()
+	}
+	
+	def currentLightState() {
+		def second = Calendar.getInstance().get(Calendar.SECOND) % 20
+		if (second < 9) {
+			UserPatch.LightState.HORIZONTAL
+		} else if (second >= 8 && second < 10 || second >= 18) {
+			UserPatch.LightState.INTERMEDIATE
+		} else {
+			UserPatch.LightState.VERTICAL
+		}
 	}
 	
 	def checkDeadlock() {
