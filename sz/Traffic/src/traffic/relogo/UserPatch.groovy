@@ -76,7 +76,7 @@ class UserPatch extends ReLogoPatch {
 
 	def colorRoundabout(int x, int y) {
 		if (Math.abs(x) > laneWidth && Math.abs(y) > laneWidth && distanceFromCenter(x, y) > 8) {
-			setPcolor(green()-1)
+			setPcolor(green())
 		} else if ((x == 0 || y == 0) && (x + y).intdiv(2) % 2 == 0 && distanceFromCenter(x, y) > 5) {
 			setPcolor(white())
 		} else if (distanceFromCenter(x, y) < 3.5d) {
