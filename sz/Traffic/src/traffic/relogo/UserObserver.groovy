@@ -52,7 +52,6 @@ class UserObserver extends ReLogoObserver{
 				setSize(1)
 				setColor(black())
 				facexy(xOffset, yOffset)
-				setLabel(index)
 				yieldZones.add(it)
 			}
 			
@@ -60,7 +59,6 @@ class UserObserver extends ReLogoObserver{
 				setxy(d * x - xOffset, d * y - yOffset)
 				facexy(xOffset, yOffset)
 				setColor(color)
-				setLabel(index)
 				register()
 			}
 		}
@@ -74,11 +72,24 @@ class UserObserver extends ReLogoObserver{
 			yieldZones[0].yieldsTo = yieldZones[1].yieldsTo = []
 			yieldZones[2].yieldsTo = yieldZones[3].yieldsTo = [yieldZones[0], yieldZones[1]]
 		} else if (intersectionType == "roundabout") {
-			createRoundabouts(1) {
-				setxy(0, 0)
-				setSize(3)
-				setColor(blue())
-				register()
+			[
+					[-1,  3],[ 0,  3],[ 1,  3],
+					[-2,  2],	 	  [ 2,  2],
+				[-3,  1],	 	  		  	[ 3,  1],
+				[-3,  0], 		  			[ 3,  0],
+				[-3, -1], 		  			[ 3, -1],
+					[-2, -2], 		  [ 2, -2],
+					[ -1,-3],[ 0, -3],[ 1, -3]
+			].each{ pos ->
+				def (x, y) = pos
+				
+				createRoundabouts(1) {
+					setxy(x, y)
+					setSize(1)
+					setColor(green())
+					register()
+				}
+			
 			}
 		}
 		

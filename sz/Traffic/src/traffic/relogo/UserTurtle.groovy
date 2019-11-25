@@ -19,6 +19,10 @@ class UserTurtle extends ReLogoTurtle{
 	Destination destination = null
 	PoissonStream source = null
 	def shouldDestroy = false
+	def hasEnteredRoundabout = false
+	def timeOutsideRoundabout = 0
+	def carDetectionAngle = 120
+	def carDetectionDistance = 4
 	
 	def static numAllCars = 0
 	def static numCrashes = 0
@@ -41,20 +45,24 @@ class UserTurtle extends ReLogoTurtle{
 	
 	def step(double dt) {
 		giveWay()
-		roundaboutCorrection()
+		turn()
 		move(dt)
-		turnToDestination()
 		detectCollisions()
 		dieIfDestroyed()
 	}
 	
-	def roundaboutCorrection() {
-		if (inCone(roundabouts(), 6, 120).size() >= 1) {
+	def turn() {
+		if (inCone(roundabouts(), 3, 70).size() >= 1) { // Enter roundabout, start turning right
 			def oldHeading = precision(getHeading(), 0).toInteger()
-			def newHeading = (oldHeading + 5).toInteger() % 360
-			
-			setLabel("SHIT " + newHeading)
+			def newHeading = (oldHeading + 10).toInteger() % 360
+
 			setHeading(newHeading)
+			timeOutsideRoundabout = 0
+			hasEnteredRoundabout = true
+		} else if (hasEnteredRoundabout && timeOutsideRoundabout > 150) { // Leave roundabout, turn to destination
+			setHeading(towards(destination) - 10) // Prevents hard left turns
+		} else if (hasEnteredRoundabout) { // Delay before leaving roundabout, prevents turning too early
+			timeOutsideRoundabout++
 		} else {
 			turnToDestination()
 		}
@@ -63,7 +71,7 @@ class UserTurtle extends ReLogoTurtle{
 	def hasCarsAhead() {
 		def cars = userTurtles()
 		cars.remove(this)
-		return inCone(cars, 4, 70).size() >= 1
+		return inCone(cars, carDetectionDistance, carDetectionAngle).size() >= 1
 	}
 	
 	def isRedLightAhead() {
@@ -127,6 +135,11 @@ class UserTurtle extends ReLogoTurtle{
 	def setDestination(Destination value) {
 		destination = value 
 		setColor(destination.getColor())
+	}
+	
+	public def enableMadnessPriority() {
+		carDetectionAngle = 30
+		carDetectionDistance = 1
 	}
 
 	def destroy() {
