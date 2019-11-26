@@ -25,9 +25,6 @@ public class UserGlobalsAndPanelFactory extends AbstractReLogoGlobalsAndPanelFac
 		
 		addGlobal("greenHorizontally")
 
-		addGlobal("intersectionType")
-		addChooserWL("intersectionType", "Intersection type", ["p2pIntersection", "priority", "trafficLights", "roundabout"], 3)
-
 		addGlobal("acceleration")
 		addSliderWL("acceleration", "Car acceleration", 1, 1, 100, 10)
 		

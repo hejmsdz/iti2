@@ -1,7 +1,10 @@
 package traffic.relogo
 
-import static repast.simphony.relogo.Utility.*;
+import static repast.simphony.relogo.Utility.*
 import static repast.simphony.relogo.UtilityG.*;
+
+import repast.simphony.engine.environment.RunEnvironment
+import repast.simphony.parameter.Parameters
 import repast.simphony.relogo.Stop;
 import repast.simphony.relogo.Utility;
 import repast.simphony.relogo.UtilityG;
@@ -13,6 +16,8 @@ import traffic.ReLogoPatch;
 class UserPatch extends ReLogoPatch {
 	static laneWidth = 3
 	enum LightState { HORIZONTAL, VERTICAL, INTERMEDIATE };
+	Parameters params = RunEnvironment.getInstance().getParameters()
+	def intersectionType = params.getValue("intersectionType")
 
 	def setColor() {
 		def x = getPxcor()

@@ -2,6 +2,9 @@ package traffic.relogo
 
 import static repast.simphony.relogo.Utility.*;
 import static repast.simphony.relogo.UtilityG.*;
+
+import repast.simphony.engine.environment.RunEnvironment
+import repast.simphony.parameter.Parameters
 import repast.simphony.relogo.Stop;
 import repast.simphony.relogo.Utility;
 import repast.simphony.relogo.UtilityG;
@@ -10,10 +13,14 @@ import repast.simphony.relogo.schedule.Setup;
 import traffic.ReLogoObserver;
 
 class UserObserver extends ReLogoObserver{
+	Parameters params = RunEnvironment.getInstance().getParameters()
+	def intersectionType = params.getValue("intersectionType")
+	
 	def yieldZones = []
 	def streams = []
 	def lightState = null
 	def deadlockCount = 0
+	
 	
 	@Setup
 	def setup(){

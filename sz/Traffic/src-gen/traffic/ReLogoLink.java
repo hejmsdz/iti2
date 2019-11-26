@@ -657,27 +657,6 @@ public class ReLogoLink<T> extends BaseLink<T>	{
 	}
 
 	/**
-	 * Returns the value of the global variable intersectionType.
-	 *
-	 * @return the value of the global variable intersectionType
-	 */
-	@ReLogoBuilderGeneratedFor("global: intersectionType")
-	public Object getIntersectionType(){
-		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("intersectionType");
-	}
-
-	/**
-	 * Sets the value of the global variable intersectionType.
-	 *
-	 * @param value
-	 *            a value
-	 */
-	@ReLogoBuilderGeneratedFor("global: intersectionType")
-	public void setIntersectionType(Object value){
-		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("intersectionType",value);
-	}
-
-	/**
 	 * Returns the value of the global variable acceleration.
 	 *
 	 * @return the value of the global variable acceleration

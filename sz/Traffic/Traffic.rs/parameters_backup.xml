@@ -30,13 +30,6 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
-				<parameter name="intersectionType" displayName="Intersection type" type="java.lang.String" 
-						defaultValue="p2pIntersection" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
-									values="p2pIntersection priority trafficLights roundabout "
-						
-		/>
 				<parameter name="poissonStreamRate" displayName="Car spawn rate" type="double" 
 						defaultValue="1.2" 
 						isReadOnly="false" 

@@ -1024,6 +1024,48 @@ public class ReLogoTurtle extends BaseTurtle{
 	}
 
 	/**
+	 * Returns the value from the getParams() method of the underlying patch.
+	 * 
+	 * @return getParams() of type repast.simphony.parameter.Parameters
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.UserPatch")
+	public repast.simphony.parameter.Parameters getParams(){
+		traffic.relogo.UserPatch p = (traffic.relogo.UserPatch)patchHere();
+		return p.getParams();
+	}
+
+	/**
+	 * Calls the setParams(repast.simphony.parameter.Parameters) method of the underlying patch.
+	 * 
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.UserPatch")
+	public void setParams(repast.simphony.parameter.Parameters value){
+		traffic.relogo.UserPatch p = (traffic.relogo.UserPatch)patchHere();
+		p.setParams(value);
+	}
+
+	/**
+	 * Returns the value from the getIntersectionType() method of the underlying patch.
+	 * 
+	 * @return getIntersectionType() of type java.lang.Object
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.UserPatch")
+	public java.lang.Object getIntersectionType(){
+		traffic.relogo.UserPatch p = (traffic.relogo.UserPatch)patchHere();
+		return p.getIntersectionType();
+	}
+
+	/**
+	 * Calls the setIntersectionType(java.lang.Object) method of the underlying patch.
+	 * 
+	 */
+	@ReLogoBuilderGeneratedFor("traffic.relogo.UserPatch")
+	public void setIntersectionType(java.lang.Object value){
+		traffic.relogo.UserPatch p = (traffic.relogo.UserPatch)patchHere();
+		p.setIntersectionType(value);
+	}
+
+	/**
 	 * Makes a directed userLink from a turtle to the caller then executes a set of
 	 * commands on the created userLink.
 	 * 
@@ -1377,27 +1419,6 @@ public class ReLogoTurtle extends BaseTurtle{
 	@ReLogoBuilderGeneratedFor("global: greenHorizontally")
 	public void setGreenHorizontally(Object value){
 		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("greenHorizontally",value);
-	}
-
-	/**
-	 * Returns the value of the global variable intersectionType.
-	 *
-	 * @return the value of the global variable intersectionType
-	 */
-	@ReLogoBuilderGeneratedFor("global: intersectionType")
-	public Object getIntersectionType(){
-		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("intersectionType");
-	}
-
-	/**
-	 * Sets the value of the global variable intersectionType.
-	 *
-	 * @param value
-	 *            a value
-	 */
-	@ReLogoBuilderGeneratedFor("global: intersectionType")
-	public void setIntersectionType(Object value){
-		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("intersectionType",value);
 	}
 
 	/**
