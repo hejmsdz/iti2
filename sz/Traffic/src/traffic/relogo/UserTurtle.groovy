@@ -23,6 +23,7 @@ class UserTurtle extends ReLogoTurtle{
 	def timeOutsideRoundabout = 0
 	def carDetectionAngle = 120
 	def carDetectionDistance = 4
+	def turningThreshold = 1
 	
 	def static numAllCars = 0
 	def static numCrashes = 0
@@ -102,7 +103,7 @@ class UserTurtle extends ReLogoTurtle{
 		forward(speed * dt)
 	}
 	
-	def turnToDestination() {		
+	def turnToDestination() {
 		if ((Math.abs(getXcor() - destination.getXcor()) < turningThreshold) ^ (Math.abs(getYcor() - destination.getYcor()) < turningThreshold)) {
 			face(destination)
 		}

@@ -3,6 +3,8 @@ package traffic.relogo
 import static repast.simphony.relogo.Utility.*
 import static repast.simphony.relogo.UtilityG.*
 
+import repast.simphony.engine.environment.RunEnvironment
+import repast.simphony.parameter.Parameters
 import repast.simphony.relogo.Plural
 import repast.simphony.relogo.Stop
 import repast.simphony.relogo.Utility
@@ -12,7 +14,10 @@ import repast.simphony.relogo.schedule.Setup
 import traffic.ReLogoTurtle
 
 class PoissonStream extends ReLogoTurtle {
-	def timeToHatch = randomExponential(poissonStreamRate)
+	Parameters params = RunEnvironment.getInstance().getParameters()
+	def rate = params.getValue("poissonStreamRate")
+	
+	def timeToHatch = randomExponential(rate)
 	def destinations = []
 	
 	def totalTravelTime = 0
@@ -30,7 +35,7 @@ class PoissonStream extends ReLogoTurtle {
 				source = this
 				destination = randomDestination
 			}
-			timeToHatch = randomExponential(poissonStreamRate)
+			timeToHatch = randomExponential(rate)
 		}
 	}
 	

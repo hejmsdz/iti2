@@ -1110,47 +1110,5 @@ public class ReLogoObserver extends BaseObserver{
 		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("maxSpeed",value);
 	}
 
-	/**
-	 * Returns the value of the global variable poissonStreamRate.
-	 *
-	 * @return the value of the global variable poissonStreamRate
-	 */
-	@ReLogoBuilderGeneratedFor("global: poissonStreamRate")
-	public Object getPoissonStreamRate(){
-		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("poissonStreamRate");
-	}
-
-	/**
-	 * Sets the value of the global variable poissonStreamRate.
-	 *
-	 * @param value
-	 *            a value
-	 */
-	@ReLogoBuilderGeneratedFor("global: poissonStreamRate")
-	public void setPoissonStreamRate(Object value){
-		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("poissonStreamRate",value);
-	}
-
-	/**
-	 * Returns the value of the global variable turningThreshold.
-	 *
-	 * @return the value of the global variable turningThreshold
-	 */
-	@ReLogoBuilderGeneratedFor("global: turningThreshold")
-	public Object getTurningThreshold(){
-		return repast.simphony.relogo.ReLogoModel.getInstance().getModelParam("turningThreshold");
-	}
-
-	/**
-	 * Sets the value of the global variable turningThreshold.
-	 *
-	 * @param value
-	 *            a value
-	 */
-	@ReLogoBuilderGeneratedFor("global: turningThreshold")
-	public void setTurningThreshold(Object value){
-		repast.simphony.relogo.ReLogoModel.getInstance().setModelParam("turningThreshold",value);
-	}
-
 
 }
