@@ -1,0 +1,12 @@
+---
+title: "Analiza danych o połowie śledzi"
+author: "Mikołaj Rozwadowski"
+date: "5 grudnia 2019"
+output: html_document
+---
+
+## Hello world
+
+```{r}
+plot(sin(seq(0, 2*pi, length=100)))
+```
