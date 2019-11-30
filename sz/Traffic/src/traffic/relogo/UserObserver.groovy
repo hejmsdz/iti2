@@ -14,6 +14,7 @@ class UserObserver extends ReLogoObserver{
 	def streams = []
 	def lightState = null
 	def deadlockCount = 0
+	def timeUnlocked = 0
 	
 	@Setup
 	def setup(){
@@ -142,12 +143,40 @@ class UserObserver extends ReLogoObserver{
 		if (isDeadlocked) {
 			deadlockCount++
 			ask(userTurtles()) { car ->
-				if (getXcor() + getYcor() <= UserPatch.laneWidth) {
+				if (Math.abs(getXcor()) + Math.abs(getYcor()) <= 2 * UserPatch.laneWidth) {
 					enableMadnessPriority()
 				}
 			}
+			if (intersectionType != "p2pIntersection") {
+				unlockYieldZones()
+			}
 		}
 	}
+
+	
+	def unlockYieldZones() {
+		if (timeUnlocked == 0) { // add priority of yield zone
+			def randomYieldZone = yieldZones().get(random(4))
+			
+			randomYieldZone.unlockYieldZone()
+			randomYieldZone.setLabel("I don't have time for this")
+			
+			timeUnlocked++
+		} else if(timeUnlocked >= 1) { // limit priority of yield zone
+			timeUnlocked++
+		}
+		
+		if (timeUnlocked >= 400) { // clear priority of yield zone
+			ask(yieldZones()){
+				setLabel("")
+			}
+			
+			timeUnlocked = 0
+			
+			setYieldZones()
+		}
+	}
+
 	
 	def carsOnTheRoad() {
 		count(userTurtles())
