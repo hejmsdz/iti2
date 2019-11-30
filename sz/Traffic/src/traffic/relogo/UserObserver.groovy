@@ -169,6 +169,31 @@ class UserObserver extends ReLogoObserver{
 			yieldZones[2].yieldsTo = yieldZones[3].yieldsTo = [yieldZones[0], yieldZones[1]]
 		}
 	}
+
+	
+	def unlockYieldZones() {
+		if (timeUnlocked == 0) { // add priority of yield zone
+			def randomYieldZone = yieldZones().get(random(4))
+			
+			randomYieldZone.unlockYieldZone()
+			randomYieldZone.setLabel("I don't have time for this")
+			
+			timeUnlocked++
+		} else if(timeUnlocked >= 1) { // limit priority of yield zone
+			timeUnlocked++
+		}
+		
+		if (timeUnlocked >= 400) { // clear priority of yield zone
+			ask(yieldZones()){
+				setLabel("")
+			}
+			
+			timeUnlocked = 0
+			
+			setYieldZones()
+		}
+	}
+
 	
 	def carsOnTheRoad() {
 		count(userTurtles())
