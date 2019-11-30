@@ -5,8 +5,44 @@ date: "5 grudnia 2019"
 output: html_document
 ---
 
-## Hello world
+## Przygotowanie
+
+Wczytanie bibliotek:
+```{r, results='hide'}
+library(dplyr)
+```
+
+Zapewnienie powtarzalności eksperymentów:
+```{r}
+set.seed(0xC0FF33)
+```
+
+Wczytanie pliku z danymi:
+```{r}
+herrings <- tbl_df(read.csv('sledzie.csv'))
+```
+
+## Przegląd i czyszczenie danych
+```{r}
+names(herrings)
+head(herrings)
+dim(herrings)
+```
+
+Zbiór zawiera 52582 przykładów opisanych liczbą porządkową, długością śledzia i czternastoma dodatkowymi atrybutami. Należy zwrócić uwagę, że niektóre kolumny wczytały się jako typ `factor` a nie `vector` i zawierają znaki zapytania, które należy interpretować jako brakujące wartości.
+Ponadto liczbę porządkową można pominąć. Mając tę wiedzę, możemy wczytać dane jeszcze raz.
 
 ```{r}
-plot(sin(seq(0, 2*pi, length=100)))
+herrings <- tbl_df(
+  read.csv('sledzie.csv',
+           na.strings=c('?'),
+           colClasses=c('NULL', rep('numeric', times=8), 'integer',
+                        rep('numeric', times=4), 'integer', 'numeric'))
+)
+head(herrings)
 ```
+
+## Wstępna analiza
+
+```{r}
+hist(herrings$length)
