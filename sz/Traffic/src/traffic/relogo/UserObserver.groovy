@@ -14,6 +14,7 @@ class UserObserver extends ReLogoObserver{
 	def streams = []
 	def lightState = null
 	def deadlockCount = 0
+	def timeUnlocked = 0
 	
 	@Setup
 	def setup(){
@@ -71,15 +72,9 @@ class UserObserver extends ReLogoObserver{
 			setColor()
 		}
 		
-		if (intersectionType == "p2pIntersection") {
-			yieldZones[2].yieldsTo = [yieldZones[1]]
-			yieldZones[1].yieldsTo = [yieldZones[3]]
-			yieldZones[3].yieldsTo = [yieldZones[0]]
-			yieldZones[0].yieldsTo = [yieldZones[2]]
-		} else if (intersectionType == "priority") {
-			yieldZones[0].yieldsTo = yieldZones[1].yieldsTo = []
-			yieldZones[2].yieldsTo = yieldZones[3].yieldsTo = [yieldZones[0], yieldZones[1]]
-		} else if (intersectionType == "roundabout") {
+		setYieldZones()
+		
+		if (intersectionType == "roundabout") {
 			[
 					[-1,  3],[ 0,  3],[ 1,  3],
 					[-2,  2],	 	  [ 2,  2],
@@ -137,15 +132,41 @@ class UserObserver extends ReLogoObserver{
 	}
 	
 	def checkDeadlock() {
-		def isDeadlocked = userTurtles().size() > 0 && userTurtles().every { it.speed == 0 && it.state != UserTurtle.State.ACCELERATING } 
+		def isDeadlocked = userTurtles().size() > 0 && 
+					yieldZones().every { !it.hasRightOfWay() } &&
+					patch(0, 0).inRadius(userTurtles(), 4).empty
 
-		if (isDeadlocked) {
-			deadlockCount++
-			ask(userTurtles()) { car ->
-				if (getXcor() + getYcor() <= UserPatch.laneWidth) {
-					enableMadnessPriority()
-				}
+		if (isDeadlocked && timeUnlocked == 0) { // add priority of yield zone
+			def randomYieldZone = yieldZones().get(random(4))
+			
+			randomYieldZone.unlockYieldZone()
+			randomYieldZone.setLabel("I don't have time for this")
+			
+			timeUnlocked++
+		} else if(timeUnlocked >= 1) { // limit priority of yield zone
+			timeUnlocked++
+		}
+		
+		if (timeUnlocked >= 400) { // clear priority of yield zone
+			ask(yieldZones()){
+				setLabel("")
 			}
+			
+			timeUnlocked = 0
+			
+			setYieldZones()
+		}
+	}
+	
+	def setYieldZones() {
+		if (intersectionType == "p2pIntersection") {
+			yieldZones[2].yieldsTo = [yieldZones[1]]
+			yieldZones[1].yieldsTo = [yieldZones[3]]
+			yieldZones[3].yieldsTo = [yieldZones[0]]
+			yieldZones[0].yieldsTo = [yieldZones[2]]
+		} else if (intersectionType == "priority") {
+			yieldZones[0].yieldsTo = yieldZones[1].yieldsTo = []
+			yieldZones[2].yieldsTo = yieldZones[3].yieldsTo = [yieldZones[0], yieldZones[1]]
 		}
 	}
 	

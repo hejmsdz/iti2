@@ -17,14 +17,14 @@ class YieldZone extends ReLogoTurtle {
 	def step(double dt) {
 		setColor(hasRightOfWay() ? sky() : red())
 		
-		if (intersectionType == "roundabout") {
+		if (intersectionType == "roundabout" || intersectionType == "p2pIntersection") {
 			ask(userTurtlesHere()) { car ->
 				car.enableMadnessPriority()
 			}
 		}
 	}
 	
-	def hasRightOfWay() {
+	public def hasRightOfWay() {
 		yieldsTo.empty || yieldsTo.every { !it.anyCarHere() }
 	}
 	
