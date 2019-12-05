@@ -6,17 +6,17 @@ output: md_document
 ---
 
 # Analiza danych o połowie śledzi
-1. [## Wyniki analizy](#wyniki-analizy)
-2. [## Przygotowanie](#przygotowanie)
-3. [## Przegląd i czyszczenie danych](#przegląd-i-czyszczenie-danych)
-4. [## Wstępna analiza](#wstępna-analiza)
-5. [## Korelacja między zmiennymi](#korelacja-między-zmiennymi)
-6. [## Zmiana rozmiaru śledzi w czasie](#zmiana-rozmiaru-śledzi-w-czasie)
-7. [## Budowa modelu regresji](##budowa-modelu-regresji)
-  1. [### Regresja liniowa](#regresja-liniowa)
-  2. [### kNN](#knn)
-  3. [### Lasso](#lasso)
-  4. [### Porównanie wyników(#porównanie-wyników)
+1. [Wyniki analizy](#wyniki-analizy)
+2. [Przygotowanie](#przygotowanie)
+3. [Przegląd i czyszczenie danych](#przegląd-i-czyszczenie-danych)
+4. [Wstępna analiza](#wstępna-analiza)
+5. [Korelacja między zmiennymi](#korelacja-między-zmiennymi)
+6. [Zmiana rozmiaru śledzi w czasie](#zmiana-rozmiaru-śledzi-w-czasie)
+7. [Budowa modelu regresji](#budowa-modelu-regresji)
+  * [Regresja liniowa](#regresja-liniowa)
+  * [kNN](#knn)
+  * [Lasso](#lasso)
+  * [Porównanie wyników](#porównanie-wyników)
 
 ## Wyniki analizy
 Z biegiem czasu można zaobserwować stopniowe zmniejszanie się długości śledzi wyławianych w Europie.
