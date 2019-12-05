@@ -339,6 +339,7 @@ ggplot(data=results, aes(x=model, y=rmse)) + geom_bar(stat="identity")
 ```
 
 ![plot of chunk compare](figure/compare-2.png)
+
 Regresor k-NN, w którym za k przyjęto 3, popełnił najmniejszy błąd i wyjaśnił najwięcej zmienności danych. Z drugiej strony, strojenie go trwało najdłużej, gdyż predykcja z tego modelu wymaga przejrzenia wszystkich zapamiętanych przykładów.
 
 
