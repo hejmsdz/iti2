@@ -8,22 +8,28 @@ output: html_document
 ## Przygotowanie
 
 Wczytanie bibliotek:
-```{r, results='hide'}
+```{r import, message=FALSE}
 library(dplyr)
+library(ggplot2)
+library(gridExtra)
+library(corrplot)
+library(gganimate)
+library(caret)
+library(knittr)
 ```
 
 Zapewnienie powtarzalności eksperymentów:
-```{r}
-set.seed(0xC0FF33)
+```{r seed}
+set.seed(0xC0FFEE)
 ```
 
 Wczytanie pliku z danymi:
-```{r}
+```{r load}
 herrings <- tbl_df(read.csv('sledzie.csv'))
 ```
 
 ## Przegląd i czyszczenie danych
-```{r}
+```{r look}
 names(herrings)
 head(herrings)
 dim(herrings)
@@ -32,7 +38,7 @@ dim(herrings)
 Zbiór zawiera 52582 przykładów opisanych liczbą porządkową, długością śledzia i czternastoma dodatkowymi atrybutami. Należy zwrócić uwagę, że niektóre kolumny wczytały się jako typ `factor` a nie `vector` i zawierają znaki zapytania, które należy interpretować jako brakujące wartości.
 Ponadto liczbę porządkową można pominąć. Mając tę wiedzę, możemy wczytać dane jeszcze raz.
 
-```{r}
+```{r reimport}
 herrings <- tbl_df(
   read.csv('sledzie.csv',
            na.strings=c('?'),
@@ -44,5 +50,125 @@ head(herrings)
 
 ## Wstępna analiza
 
-```{r}
-hist(herrings$length)
+```{r histograms, cache=TRUE, warning=FALSE, message=FALSE}
+require(gridExtra)
+histograms = lapply(colnames(herrings), function(col) {
+  ggplot(herrings, aes_string(x=col)) + geom_histogram()
+})
+
+do.call(grid.arrange, c(histograms, list(ncol=3)))
+```
+
+Długość śledzia ma rozkład najbliższy do normalnego. Pozostałe atrybuty są rozłożone dużo bardziej nieregularne, ale i z nich można wyciągnąć pewne wnioski:
+Kolumny `cfin1`, `cfin2`, `chel1` i `lcpi1`, oznaczające dostępność różnych gatunków planktonu, mają mocno prawostronnie skośny rozkład, sugerujący, że najczęściej występowanie tych organizmów było niewielkie, ale w niektórych, rzadkich przypadkach zaobserwowano ich dużo więcej.
+Zasolenie wód (`sal`) utrzymywało się na względnie stałym poziomie (wszystkie obserwacje znalazły się w okolicach 35,4 - 35,6 ppt, a znaczna większość w środku tego przedziału).
+Najwięcej połowów odbywało się latem (w lipcu i sierpniu). Ponieważ horyzont czasowy danych jest dość długi (60 lat), trochę rozczarowujący jest brak kolumny "roku" w analizowanym zbiorze. Umożliwłaby ona lepszą analizę danych w ujęciu chronologicznym.
+
+## Korelacja między zmiennymi
+```{r correlation}
+correlation = cor(herrings, use="complete.obs")
+corrplot(correlation)
+```
+
+Największą korelację widać między parami atrybutów:
+* `chel1` i `lcop1` – dotyczą występowania różnych gatunków planktonu. Można to próbować tłumaczyć np. dostępnością roślin, którymi żywią się oba gatunki (wiedza dziedzinowa).
+* `lcop2` i `chel2` – analogiczne.
+* `cumf` i `fbar` – oba atrybuty dotyczą natężenia połowów.
+* `totaln` i `cumf` (korelacja negatywna) – im więcej połowów, tym mniej ryb zostaje.
+Najbardziej interesująćy nas atrybut » długość śledzi – nie wykazuje silnej korelacji z żadnym innym. Można jedynie zaobserwować słabą ujemną korelację z temperaturą wód.
+
+## Zmiana rozmiaru śledzi w czasie
+
+Na poniższym wykresie pudełkowym przedstawione są długości złowionych śledzi w wydzielonych chronologicznie trzydziestu grupach. Od okresu nr 13 widać wyraźną tendencję spadkową.
+
+```{r length_vs_time, cache=TRUE}
+n = nrow(herrings)
+bins = 30
+chunked_herrings = herrings %>% select(length) %>% mutate(chunk=floor((row_number() - 1) / n * bins))
+
+ggplot(chunked_herrings, aes(factor(chunk), length)) + 
+  geom_boxplot() + transition_reveal(chunk)
+```
+
+## Budowa modelu regresji
+
+Rozpoczynam od podziału zbioru na część uczącą i testową oraz sprawdzenia, czy rozkłady długości wypadają w nich podobnie.
+
+```{r regression_split}
+train_idx <- createDataPartition(y=herrings$length, p=.75, list=FALSE)
+
+herrings_train <- na.omit(data.frame(herrings[train_idx,]))
+herrings_test <- na.omit(data.frame(herrings[-train_idx,]))
+
+ggplot(mapping=aes(alpha=0.4)) + 
+ geom_density(aes(length, fill="red"), herrings_train) + 
+ geom_density(aes(length, fill="blue"), herrings_test)
+
+cv <- trainControl(method = "repeatedcv", number=10, repeats=10)
+rmses = list()
+r2s = list()
+```
+
+### Regresja liniowa
+```{r lm, cache=TRUE}
+lm <- train(
+  length~.,
+  data=herrings_train,
+  method="lm",
+  metric="RMSE",
+  trControl=cv,
+  tuneGrid=expand.grid(intercept=c(TRUE, FALSE))
+)
+lm
+lm_result <- predict(lm, herrings_test)
+
+r2s$lm = R2(lm_result, herrings_test$length)
+rmses$lm = RMSE(lm_result, herrings_test$length)
+```
+
+### kNN
+```{r knn, cache=TRUE}
+knn <- train(
+  length~.,
+  data=herrings_train,
+  method="knn",
+  metric="RMSE",
+  trControl=cv,
+  tuneGrid=expand.grid(k=1:5)
+)
+knn
+knn_result <- predict(knn, herrings_test)
+
+r2s$knn = R2(knn_result, herrings_test$length)
+rmses$knn = RMSE(knn_result, herrings_test$length)
+```
+
+### Lasso
+```{r lasso, cache=TRUE}
+lasso <- train(
+  length~.,
+  data=herrings_train,
+  method="lasso",
+  metric="RMSE",
+  trControl=cv,
+  tuneGrid=expand.grid(fraction=(1:10)/10)
+)
+lasso
+lasso_result <- predict(lasso, herrings_test)
+
+r2s$lasso = R2(lasso_result, herrings_test$length)
+rmses$lasso = RMSE(lasso_result, herrings_test$length)
+```
+
+### Porównanie wyników
+```{r compare}
+results = results(model=c('lm', 'knn', 'lasso'), r2=c(r2s$lm, r2s$knn, r2s$lasso), rmse=c(rmses$lm, rmses$knn, rmses$lasso))
+kable(results)
+
+ggplot(data=results, aes(x=model, y=r2s)) + geom_bar(stat="identity")
+ggplot(data=results, aes(x=model, y=rmse)) + geom_bar(stat="identity")
+```
+Regresor k-NN, w którym za k przyjęto ?, popełnił najmniejszy błąd i wyjaśnił najwięcej zmienności danych. Z drugiej strony, strojenie go trwało najdłużej, gdyż predykcja z tego modelu wymaga przejrzenia wszystkich zapamiętanych przykładów.
+
+```{r varimp}
+ggplot(varImp(knn))
