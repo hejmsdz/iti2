@@ -5,6 +5,10 @@ date: "5 grudnia 2019"
 output: html_document
 ---
 
+## Wyniki analizy
+Z biegiem czasu można zaobserwować stopniowe zmniejszanie się długości śledzi wyławianych w Europie.
+Powodem mogą być zmiany klimatczne i zbyt mocna ingerencja w morski ekosystem przez połowy.
+
 ## Przygotowanie
 
 Wczytanie bibliotek:
@@ -15,7 +19,7 @@ library(gridExtra)
 library(corrplot)
 library(gganimate)
 library(caret)
-library(knittr)
+library(knitr)
 ```
 
 Zapewnienie powtarzalności eksperymentów:
@@ -58,6 +62,8 @@ histograms = lapply(colnames(herrings), function(col) {
 
 do.call(grid.arrange, c(histograms, list(ncol=3)))
 ```
+
+Znaczenia atrybutów wyjaśnione są na stronie [z opisem zadania](http://www.cs.put.poznan.pl/alabijak/emd/projekt/projekt_analiza.html).
 
 Długość śledzia ma rozkład najbliższy do normalnego. Pozostałe atrybuty są rozłożone dużo bardziej nieregularne, ale i z nich można wyciągnąć pewne wnioski:
 Kolumny `cfin1`, `cfin2`, `chel1` i `lcpi1`, oznaczające dostępność różnych gatunków planktonu, mają mocno prawostronnie skośny rozkład, sugerujący, że najczęściej występowanie tych organizmów było niewielkie, ale w niektórych, rzadkich przypadkach zaobserwowano ich dużo więcej.
@@ -162,13 +168,20 @@ rmses$lasso = RMSE(lasso_result, herrings_test$length)
 
 ### Porównanie wyników
 ```{r compare}
-results = results(model=c('lm', 'knn', 'lasso'), r2=c(r2s$lm, r2s$knn, r2s$lasso), rmse=c(rmses$lm, rmses$knn, rmses$lasso))
+results <- data.frame(model=c('lm', 'knn', 'lasso'), r2=c(r2s$lm, r2s$knn, r2s$lasso), rmse=c(rmses$lm, rmses$knn, rmses$lasso))
 kable(results)
 
 ggplot(data=results, aes(x=model, y=r2s)) + geom_bar(stat="identity")
 ggplot(data=results, aes(x=model, y=rmse)) + geom_bar(stat="identity")
 ```
-Regresor k-NN, w którym za k przyjęto ?, popełnił najmniejszy błąd i wyjaśnił najwięcej zmienności danych. Z drugiej strony, strojenie go trwało najdłużej, gdyż predykcja z tego modelu wymaga przejrzenia wszystkich zapamiętanych przykładów.
+Regresor k-NN, w którym za k przyjęto 3, popełnił najmniejszy błąd i wyjaśnił najwięcej zmienności danych. Z drugiej strony, strojenie go trwało najdłużej, gdyż predykcja z tego modelu wymaga przejrzenia wszystkich zapamiętanych przykładów.
 
 ```{r varimp}
 ggplot(varImp(knn))
+```
+
+Najważniejszą zmienną w modelu okazała się temperatura (`sst`), a w dalszej kolejności oscylacja północnoatlantycka (`nao`), natężenie połowów (`fbar`) oraz dostępność planktonu (`lcop1` i `chel1`). Nie powinno być to zaskoczeniem – te zmienne były najbardziej (mimo że i tak słabo) skorelowane z długością śledzi.
+
+Spadek długości wyławianych śledzi można więc próbować tłumaczyć postępującymi zmianami klimatycznymi.
+Być może intensywność połowów zaburza też zależności ekologiczne w morskiej sieci pokarmowej, co przekłada się na mniejszą dostępność pożywienia.
+
